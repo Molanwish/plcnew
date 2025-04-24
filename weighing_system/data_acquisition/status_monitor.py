@@ -5,6 +5,7 @@
 
 import time
 import threading
+import copy  # 导入copy模块用于深拷贝
 from enum import Enum
 from collections import defaultdict
 
@@ -109,7 +110,7 @@ class StatusMonitor:
         try:
             # 检查连接状态
             old_connected = self.connected
-            self.connected = self.communicator.is_connected()
+            self.connected = self.communicator.check_connection()
             
             # 如果连接状态发生变化，触发事件
             if old_connected != self.connected:
@@ -308,6 +309,15 @@ class StatusMonitor:
             return False
             
         with self.lock:
+            # 确保事件类型有效
+            if not isinstance(event_type, EventType):
+                return False
+                
+            # 如果事件类型不存在，初始化为空列表
+            if event_type not in self.event_listeners:
+                self.event_listeners[event_type] = []
+                
+            # 检查回调是否已存在，避免重复添加
             if callback not in self.event_listeners[event_type]:
                 self.event_listeners[event_type].append(callback)
                 return True
@@ -325,7 +335,12 @@ class StatusMonitor:
             bool: 操作是否成功
         """
         with self.lock:
-            if event_type in self.event_listeners and callback in self.event_listeners[event_type]:
+            # 确保事件类型有效且存在
+            if not isinstance(event_type, EventType) or event_type not in self.event_listeners:
+                return False
+                
+            # 检查回调是否存在
+            if callback in self.event_listeners[event_type]:
                 self.event_listeners[event_type].remove(callback)
                 return True
             return False
@@ -338,15 +353,25 @@ class StatusMonitor:
             event_type (EventType): 事件类型
             data (dict): 事件数据
         """
+        # 获取监听器列表和事件数据的副本，确保回调不会修改原始数据
         listeners = []
+        event_data = None
+        
         with self.lock:
-            listeners = self.event_listeners[event_type].copy()
+            if event_type in self.event_listeners:
+                listeners = self.event_listeners[event_type].copy()
+            # 创建事件数据的深拷贝，防止回调修改原始数据
+            event_data = copy.deepcopy(data)
             
+        # 在锁外执行回调，避免长时间持有锁
         for callback in listeners:
             try:
-                callback(data)
+                # 使用数据副本调用回调函数
+                callback(event_data)
             except Exception as e:
                 print(f"事件回调出错: {e}")
+                import traceback
+                traceback.print_exc()
                 
     def set_update_interval(self, interval):
         """
@@ -366,12 +391,12 @@ class StatusMonitor:
         
     def is_connected(self):
         """
-        检查是否已连接
+        获取连接状态
         
         Returns:
-            bool: 是否已连接
+            bool: 如果已连接返回True，否则返回False
         """
-        return self.connected
+        return self.communicator.check_connection()
         
     def is_running(self):
         """
