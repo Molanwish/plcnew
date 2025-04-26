@@ -1,3 +1,4 @@
 # 称重系统依赖
-pymodbus==2.5.3
-numpy==1.24.3 
+pymodbus>=3.0
+numpy
+matplotlib 

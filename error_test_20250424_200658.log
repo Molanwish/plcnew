@@ -1,0 +1,47 @@
+2025-04-24 20:06:58,932 - error_test - INFO - 成功导入通信模块
+2025-04-24 20:06:58,933 - error_test - INFO - 成功导入PLC模拟器
+2025-04-24 20:06:58,934 - error_test - INFO - ====== 开始测试通信模块错误处理 ======
+2025-04-24 20:06:58,934 - error_test - INFO - === 测试连接错误处理 ===
+2025-04-24 20:06:58,934 - error_test - INFO - 测试不存在的端口...
+2025-04-24 20:06:58,934 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:06:58,935 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:06:58,935 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:06:58,935 - error_test - INFO - 不存在端口测试通过
+2025-04-24 20:06:58,935 - error_test - INFO - 测试错误的通信参数...
+2025-04-24 20:06:58,936 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 115200
+2025-04-24 20:06:58,936 - modbus_client - ERROR - 连接PLC时发生错误: Not a valid parity: 'Z'
+2025-04-24 20:06:58,942 - error_test - INFO - 错误通信参数测试完成
+2025-04-24 20:06:58,943 - error_test - INFO - 测试连接超时...
+2025-04-24 20:06:58,943 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:06:58,944 - modbus_client - INFO - 已连接到PLC，端口: COM1
+2025-04-24 20:06:58,944 - error_test - INFO - 连接耗时：0.001秒
+2025-04-24 20:06:58,944 - error_test - INFO - 连接超时测试完成
+2025-04-24 20:06:58,944 - error_test - INFO - 所有连接错误处理测试完成
+2025-04-24 20:06:58,944 - error_test - INFO - === 测试重试机制 ===
+2025-04-24 20:06:58,944 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.2秒, 渐进式=False
+2025-04-24 20:06:58,945 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:06:58,945 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:06:58,945 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:06:58,945 - error_test - WARNING - 连接失败，无法测试重试机制
+2025-04-24 20:06:58,945 - error_test - INFO - === 测试自动重连功能 ===
+2025-04-24 20:06:58,945 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:06:58,945 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:06:58,946 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:06:58,946 - error_test - WARNING - 连接失败，无法测试自动重连
+2025-04-24 20:06:58,946 - error_test - INFO - === 测试健康检查功能 ===
+2025-04-24 20:06:58,946 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.5秒, 渐进式=True
+2025-04-24 20:06:58,946 - plc_communicator - INFO - 创建新ModbusRTUClient实例 - 端口: COM1, 从站地址: 1
+2025-04-24 20:06:58,946 - plc_communicator - INFO - 已配置健康检查 - 启用: True, 地址: 0, 间隔: 1秒
+2025-04-24 20:06:58,946 - error_test - ERROR - 测试过程中发生未捕获异常: 'ModbusRTUClient' object has no attribute 'is_socket_open'
+2025-04-24 20:06:58,950 - error_test - ERROR - Traceback (most recent call last):
+  File "D:\new\test_error_handling.py", line 397, in main
+    test_health_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "D:\new\test_error_handling.py", line 167, in test_health_check
+    communicator.configure_health_check(enabled=True, interval=1)  # 1秒检查一次
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\new\weighing_system\src\communication\plc_communicator.py", line 806, in configure_health_check
+    if self.health_check_enabled and self.client and self.client.is_socket_open():
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ModbusRTUClient' object has no attribute 'is_socket_open'
+

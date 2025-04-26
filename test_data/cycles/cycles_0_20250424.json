@@ -1,0 +1,17 @@
+[
+  {
+    "hopper_id": 0,
+    "start_time": 1745490312.5210893,
+    "end_time": 1745490322.5210898,
+    "target_weight": 500.0,
+    "final_weight": 499.5,
+    "error": -0.5,
+    "weight_samples": [
+      [
+        1745490317.5210898,
+        250
+      ]
+    ],
+    "timestamp": 1745490322.5210938
+  }
+]

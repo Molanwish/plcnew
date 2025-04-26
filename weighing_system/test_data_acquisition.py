@@ -6,8 +6,25 @@
 
 import time
 import random
-from weighing_system.communication import PLCCommunicator, ModbusRTUClient
-from weighing_system.data_acquisition import CycleDetector, DataRecorder, StatusMonitor, DataAnalyzer
+import sys
+print("开始导入模块...")
+sys.stdout.flush()
+
+try:
+    from weighing_system.src.communication import PLCCommunicator, ModbusRTUClient
+    print("成功导入通信模块")
+    sys.stdout.flush()
+except ImportError as e:
+    print(f"导入通信模块失败: {e}")
+    sys.stdout.flush()
+
+try:
+    from weighing_system.data_acquisition import CycleDetector, DataRecorder, StatusMonitor, DataAnalyzer
+    print("成功导入数据采集模块")
+    sys.stdout.flush()
+except ImportError as e:
+    print(f"导入数据采集模块失败: {e}")
+    sys.stdout.flush()
 
 
 class MockCommunicator:
@@ -306,21 +323,41 @@ def test_data_analyzer(recorder, comm):
 def main():
     """主函数"""
     print("===== 数据采集模块测试 =====")
+    sys.stdout.flush()
     
-    # 测试周期检测器
-    detector, comm = test_cycle_detector()
-    
-    # 测试数据记录器
-    recorder = test_data_recorder(detector, comm)
-    
-    # 测试状态监视器
-    monitor = test_status_monitor(comm)
-    
-    # 测试数据分析器
-    analyzer = test_data_analyzer(recorder, comm)
-    
-    print("所有测试完成！")
+    try:
+        # 测试周期检测器
+        print("准备测试周期检测器...")
+        sys.stdout.flush()
+        detector, comm = test_cycle_detector()
+        
+        # 测试数据记录器
+        print("准备测试数据记录器...")
+        sys.stdout.flush()
+        recorder = test_data_recorder(detector, comm)
+        
+        # 测试状态监视器
+        print("准备测试状态监视器...")
+        sys.stdout.flush()
+        monitor = test_status_monitor(comm)
+        
+        # 测试数据分析器
+        print("准备测试数据分析器...")
+        sys.stdout.flush()
+        analyzer = test_data_analyzer(recorder, comm)
+        
+        print("所有测试完成！")
+        sys.stdout.flush()
+    except Exception as e:
+        print(f"测试过程中出错: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.stdout.flush()
 
 
 if __name__ == "__main__":
-    main() 
+    print("脚本开始执行")
+    sys.stdout.flush()
+    main()
+    print("脚本执行完毕")
+    sys.stdout.flush() 

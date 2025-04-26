@@ -1,0 +1,1 @@
+2025-04-24 20:02:12,630 - error_test - ERROR - 导入通信模块失败: cannot import name 'DataConverter' from 'weighing_system.src.communication' (D:\new\weighing_system\src\communication\__init__.py)

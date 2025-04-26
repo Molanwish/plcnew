@@ -1,0 +1,22 @@
+{
+    "logging": {
+        "level": "INFO",
+        "file": "app.log"
+    },
+    "communication": {
+        "method": "RTU",
+        "slave_id": 1,
+        "timeout": 1.0,
+        "port": "COM3",
+        "baudrate": 9600,
+        "parity": "N",
+        "bytesize": 8,
+        "stopbits": 1.0
+    },
+    "monitoring": {
+        "interval": 0.1
+    },
+    "data": {
+        "base_dir": "data"
+    }
+}

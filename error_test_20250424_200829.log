@@ -1,0 +1,95 @@
+2025-04-24 20:08:29,849 - error_test - INFO - 成功导入通信模块
+2025-04-24 20:08:29,853 - error_test - INFO - 成功导入PLC模拟器
+2025-04-24 20:08:29,854 - error_test - INFO - ====== 开始测试通信模块错误处理 ======
+2025-04-24 20:08:29,854 - error_test - INFO - === 测试连接错误处理 ===
+2025-04-24 20:08:29,854 - error_test - INFO - 测试不存在的端口...
+2025-04-24 20:08:29,854 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:08:29,855 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:08:29,855 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:08:29,855 - error_test - INFO - 不存在端口测试通过
+2025-04-24 20:08:29,856 - error_test - INFO - 测试错误的通信参数...
+2025-04-24 20:08:29,856 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 115200
+2025-04-24 20:08:29,856 - modbus_client - ERROR - 连接PLC时发生错误: Not a valid parity: 'Z'
+2025-04-24 20:08:29,862 - error_test - INFO - 错误通信参数测试完成
+2025-04-24 20:08:29,862 - error_test - INFO - 测试连接超时...
+2025-04-24 20:08:29,862 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:08:29,863 - modbus_client - INFO - 已连接到PLC，端口: COM1
+2025-04-24 20:08:29,863 - error_test - INFO - 连接耗时：0.001秒
+2025-04-24 20:08:29,863 - error_test - INFO - 连接超时测试完成
+2025-04-24 20:08:29,863 - error_test - INFO - 所有连接错误处理测试完成
+2025-04-24 20:08:29,863 - error_test - INFO - === 测试重试机制 ===
+2025-04-24 20:08:29,863 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.2秒, 渐进式=False
+2025-04-24 20:08:29,863 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:08:29,864 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:08:29,864 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:08:29,864 - error_test - WARNING - 连接失败，无法测试重试机制
+2025-04-24 20:08:29,864 - error_test - INFO - === 测试自动重连功能 ===
+2025-04-24 20:08:29,864 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:08:29,864 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:08:29,864 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:08:29,864 - error_test - WARNING - 连接失败，无法测试自动重连
+2025-04-24 20:08:29,865 - error_test - INFO - === 测试健康检查功能 ===
+2025-04-24 20:08:29,865 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.5秒, 渐进式=True
+2025-04-24 20:08:29,865 - plc_communicator - INFO - 创建新ModbusRTUClient实例 - 端口: COM1, 从站地址: 1
+2025-04-24 20:08:29,865 - plc_communicator - INFO - 已配置健康检查 - 启用: True, 地址: 0, 间隔: 1秒
+2025-04-24 20:08:29,865 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:08:29,865 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:08:29,865 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:08:29,866 - plc_communicator - ERROR - 连接PLC失败
+2025-04-24 20:08:29,866 - error_test - WARNING - 连接失败，无法测试健康检查
+2025-04-24 20:08:29,866 - error_test - INFO - === 测试数据转换器错误处理 ===
+2025-04-24 20:08:29,866 - error_test - INFO - 测试不同字节序...
+2025-04-24 20:08:29,866 - error_test - INFO - 字节序 big: 123.456 -> [17142, 59769] -> 123.45600128173828
+2025-04-24 20:08:29,866 - error_test - INFO - 字节序 little: 123.456 -> [59769, 17142] -> 123.45600128173828
+2025-04-24 20:08:29,866 - error_test - INFO - 字节序 middle_big: 123.456 -> [63042, 31209] -> 123.45600128173828
+2025-04-24 20:08:29,866 - error_test - INFO - 字节序 middle_little: 123.456 -> [63042, 31209] -> 123.45600128173828
+2025-04-24 20:08:29,867 - error_test - INFO - 测试无效输入...
+2025-04-24 20:08:29,867 - data_converter - ERROR - 转换float32需要两个连续寄存器值
+2025-04-24 20:08:29,867 - error_test - WARNING - 处理不足两个寄存器时未抛出异常，返回: None
+2025-04-24 20:08:29,867 - data_converter - ERROR - 转换float32需要两个连续寄存器值
+2025-04-24 20:08:29,867 - error_test - WARNING - 处理空输入时未抛出异常，返回: None
+2025-04-24 20:08:29,867 - error_test - INFO - 测试无效字节序...
+2025-04-24 20:08:29,867 - data_converter - WARNING - 未知字节序: invalid_order，使用大端字节序
+2025-04-24 20:08:29,867 - error_test - INFO - 设置无效字节序被接受，检查是否使用了默认值
+2025-04-24 20:08:29,867 - error_test - INFO - 数据转换器测试完成
+2025-04-24 20:08:29,868 - error_test - INFO - === 测试并发访问下的错误处理 ===
+2025-04-24 20:08:29,868 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.5秒, 渐进式=True
+2025-04-24 20:08:29,868 - plc_communicator - INFO - 创建新ModbusRTUClient实例 - 端口: COM1, 从站地址: 1
+2025-04-24 20:08:29,868 - modbus_client - INFO - 已更新重试策略: 次数=2, 延迟=0.5秒, 渐进式=True
+2025-04-24 20:08:29,868 - modbus_client - INFO - 已更新重试策略: 次数=2, 延迟=0.1秒, 渐进式=True
+2025-04-24 20:08:29,869 - plc_communicator - INFO - 已设置重试策略 - 重试次数: 2, 重试延迟: 0.1秒
+2025-04-24 20:08:29,869 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:08:29,869 - pymodbus.client.sync - ERROR - could not open port 'COM1': PermissionError(13, '拒绝访问。', None, 5)
+2025-04-24 20:08:29,869 - modbus_client - ERROR - 无法连接到PLC，端口: COM1
+2025-04-24 20:08:29,869 - plc_communicator - ERROR - 连接PLC失败
+2025-04-24 20:08:29,870 - error_test - WARNING - 连接失败，无法测试并发访问
+2025-04-24 20:08:29,870 - error_test - INFO - === 测试PLCCommunicator错误处理 ===
+2025-04-24 20:08:29,870 - error_test - INFO - 测试无效连接参数...
+2025-04-24 20:08:29,870 - plc_communicator - INFO - 未指定端口，需手动调用connect方法连接
+2025-04-24 20:08:29,870 - error_test - INFO - 测试连接超时处理...
+2025-04-24 20:08:29,870 - modbus_client - INFO - 已更新重试策略: 次数=3, 延迟=0.5秒, 渐进式=True
+2025-04-24 20:08:29,870 - plc_communicator - INFO - 创建新ModbusRTUClient实例 - 端口: NONEXISTENT, 从站地址: 1
+2025-04-24 20:08:29,871 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:08:29,871 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:08:29,871 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:08:29,871 - plc_communicator - ERROR - 连接PLC失败
+2025-04-24 20:08:29,871 - error_test - INFO - 测试读取操作错误处理...
+2025-04-24 20:08:29,871 - modbus_client - WARNING - 通信客户端未连接，尝试重连...
+2025-04-24 20:08:29,871 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:08:29,872 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:08:29,872 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:08:29,872 - plc_communicator - WARNING - 健康检查失败 - 地址: 0
+2025-04-24 20:08:29,872 - plc_communicator - ERROR - 读取重量失败 - 未连接到PLC
+2025-04-24 20:08:29,872 - error_test - INFO - 测试写入操作错误处理...
+2025-04-24 20:08:29,872 - plc_communicator - WARNING - 与PLC的连接已断开
+2025-04-24 20:08:29,872 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:08:29,873 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:08:29,873 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:08:29,873 - plc_communicator - ERROR - 连接PLC失败
+2025-04-24 20:08:29,873 - plc_communicator - ERROR - 写入目标重量失败 - 未连接到PLC
+2025-04-24 20:08:29,873 - error_test - INFO - 测试字节序异常处理...
+2025-04-24 20:08:29,873 - data_converter - WARNING - 未知字节序: invalid_order，使用大端字节序
+2025-04-24 20:08:29,874 - plc_communicator - INFO - 已设置字节序为: invalid_order
+2025-04-24 20:08:29,874 - error_test - INFO - 字节序异常处理测试完成
+2025-04-24 20:08:29,874 - error_test - INFO - PLCCommunicator错误处理测试完成
+2025-04-24 20:08:29,874 - error_test - INFO - === 测试与PLC模拟器的交互 ===

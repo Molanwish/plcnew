@@ -4,11 +4,11 @@
 
 ### 核心技术
 - **Python 3.8+**：主要开发语言
-- **PyQt5**：用于开发用户界面
-- **pymodbus**：用于MODBUS RTU通信
+- **Tkinter (ttk)**：用于开发用户界面 (使用 themed widgets)
+- **pymodbus**：用于MODBUS RTU/TCP 通信
 - **numpy**：用于数据处理和算法实现
 - **pandas**：用于数据分析和管理
-- **matplotlib/pyqtgraph**：用于数据可视化
+- **matplotlib/pyqtgraph**：用于数据可视化 (需要确认实际使用的是哪个，或者两者都有)
 - **pytest**：用于单元测试
 
 ### 辅助工具
@@ -20,8 +20,8 @@
 ## 开发环境设置
 
 ### 开发环境要求
-1. **操作系统**：Windows 10/11 (主要), Linux/macOS(兼容)
-2. **Python**：Python 3.8或更高版本
+1. **操作系统**：Windows 10/11 (主要), Linux/macOS(兼容性待验证)
+2. **Python**：Python 3.8或更高版本 (Tkinter 通常内置)
 3. **IDE**：Visual Studio Code或其他Python IDE
 4. **串口**：需要RS-485转USB设备用于MODBUS RTU通信
 
@@ -62,15 +62,14 @@
 
 ### 主要依赖项
 - **pymodbus** (v2.5.3+): MODBUS协议实现
-- **PyQt5** (v5.15.0+): GUI框架
 - **numpy** (v1.20.0+): 数学计算
 - **pandas** (v1.3.0+): 数据分析
-- **matplotlib** (v3.5.0+): 数据可视化
+- **matplotlib** (v3.5.0+): 数据可视化 (待确认使用情况)
 - **pyserial** (v3.5+): 串口通信
 - **sqlalchemy** (v1.4.0+): 数据存储(可选)
 - **pytest** (v6.2.0+): 单元测试
 
 ### 系统依赖
 - **Python** (v3.8+)
-- **Qt** (v5.15.0+, PyQt5依赖)
+- **Tkinter/Tcl/Tk**: 通常随 Python 一起安装
 - **Windows DLLs**: 串口驱动程序 

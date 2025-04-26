@@ -1,0 +1,29 @@
+2025-04-24 20:04:05,222 - error_test - INFO - 成功导入通信模块
+2025-04-24 20:04:05,225 - error_test - INFO - 成功导入PLC模拟器
+2025-04-24 20:04:05,226 - error_test - INFO - ====== 开始测试通信模块错误处理 ======
+2025-04-24 20:04:05,226 - error_test - INFO - === 测试连接错误处理 ===
+2025-04-24 20:04:05,226 - error_test - INFO - 测试不存在的端口...
+2025-04-24 20:04:05,262 - modbus_client - INFO - 尝试连接到串口 NONEXISTENT，波特率 9600
+2025-04-24 20:04:05,263 - pymodbus.client.sync - ERROR - could not open port 'NONEXISTENT': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2025-04-24 20:04:05,263 - modbus_client - ERROR - 无法连接到PLC，端口: NONEXISTENT
+2025-04-24 20:04:05,263 - error_test - INFO - 不存在端口测试通过
+2025-04-24 20:04:05,263 - error_test - INFO - 测试错误的通信参数...
+2025-04-24 20:04:05,264 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 115200
+2025-04-24 20:04:05,264 - modbus_client - ERROR - 连接PLC时发生错误: Not a valid parity: 'Z'
+2025-04-24 20:04:05,269 - error_test - INFO - 错误通信参数测试完成
+2025-04-24 20:04:05,270 - error_test - INFO - 测试连接超时...
+2025-04-24 20:04:05,270 - modbus_client - INFO - 尝试连接到串口 COM1，波特率 9600
+2025-04-24 20:04:05,270 - modbus_client - INFO - 已连接到PLC，端口: COM1
+2025-04-24 20:04:05,270 - error_test - INFO - 连接耗时：0.001秒
+2025-04-24 20:04:05,271 - error_test - INFO - 连接超时测试完成
+2025-04-24 20:04:05,271 - error_test - INFO - 所有连接错误处理测试完成
+2025-04-24 20:04:05,271 - error_test - INFO - === 测试重试机制 ===
+2025-04-24 20:04:05,271 - error_test - ERROR - 测试过程中发生未捕获异常: ModbusRTUClient.__init__() got an unexpected keyword argument 'retry_count'
+2025-04-24 20:04:05,272 - error_test - ERROR - Traceback (most recent call last):
+  File "D:\new\test_error_handling.py", line 385, in main
+    test_retry_mechanism()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\new\test_error_handling.py", line 87, in test_retry_mechanism
+    client = ModbusRTUClient(port=TEST_PORT, timeout=0.5, retry_count=3, retry_delay=0.2)
+TypeError: ModbusRTUClient.__init__() got an unexpected keyword argument 'retry_count'
+
