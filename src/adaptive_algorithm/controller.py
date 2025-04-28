@@ -16,27 +16,28 @@ class AdaptiveThreeStageController:
     自适应三阶段控制器
     实现颗粒称重包装机的自适应控制算法
     """
-    def __init__(self, config=None):
+    def __init__(self, config=None, hopper_id=None):
         """
         初始化控制器
         
         Args:
             config (dict, optional): 控制器配置
+            hopper_id (int, optional): 控制器管理的料斗ID
         """
         # 基本配置
         self.config = {
             # 三个阶段的转换阈值
-            "coarse_to_fine_threshold": 0.85,    # 粗搜索→精搜索的性能阈值
+            "coarse_to_fine_threshold": 0.70,    # 粗搜索→精搜索的性能阈值(修改:降低门槛)
             "fine_to_maintenance_threshold": 0.92, # 精搜索→维持的性能阈值
             "maintenance_to_fine_threshold": 0.80, # 维持→精搜索的性能阈值(性能下降)
             
             # 稳定性评估参数
-            "stability_window": 10,              # 稳定性评估窗口大小
-            "min_stability_cycles": 5,           # 最小稳定周期数
+            "stability_window": 5,              # 稳定性评估窗口大小(修改:减小窗口)
+            "min_stability_cycles": 3,           # 最小稳定周期数(修改:减少要求)
             
             # 参数调整幅度
-            "coarse_adjustment_scale": 1.0,      # 粗搜索调整比例
-            "fine_adjustment_scale": 0.3,        # 精搜索调整比例
+            "coarse_adjustment_scale": 1.5,      # 粗搜索调整比例(修改:增加幅度)
+            "fine_adjustment_scale": 0.5,        # 精搜索调整比例(修改:增加幅度)
             "maintenance_adjustment_scale": 0.1,  # 维持阶段调整比例
             
             # 参数约束
@@ -46,15 +47,23 @@ class AdaptiveThreeStageController:
             "min_advance_amount": 0.1,           # 最小提前量(kg)
             
             # 其他配置
-            "min_history_for_adjustment": 5,     # 调整前最小历史数据量
-            "performance_weight_accuracy": 0.6,   # 精度在性能评分中的权重
-            "performance_weight_stability": 0.3,  # 稳定性在性能评分中的权重
+            "min_history_for_adjustment": 3,     # 调整前最小历史数据量(修改:减少等待)
+            "performance_weight_accuracy": 0.7,   # 精度在性能评分中的权重(修改:提高精度权重)
+            "performance_weight_stability": 0.2,  # 稳定性在性能评分中的权重
             "performance_weight_efficiency": 0.1, # 效率在性能评分中的权重
+            
+            # 新增:强制阶段转换参数
+            "max_coarse_cycles": 8,              # 最大粗搜索周期数,超过则强制转入精搜索
+            "error_threshold_large": 0.3,        # 大偏差阈值(相对目标重量的比例)
+            "error_threshold_medium": 0.1,       # 中偏差阈值(相对目标重量的比例)
         }
         
         # 更新配置
         if config:
             self.config.update(config)
+            
+        # 设置料斗ID
+        self.hopper_id = hopper_id
             
         # 控制器状态
         self.stage = ControllerStage.COARSE_SEARCH  # 初始阶段为粗搜索
@@ -73,8 +82,8 @@ class AdaptiveThreeStageController:
         
         # 参数边界
         self.param_bounds = {
-            "feeding_speed_coarse": (self.config["min_feeding_speed"], self.config["max_feeding_speed"]),
-            "feeding_speed_fine": (self.config["min_feeding_speed"], self.config["max_feeding_speed"]),
+            "feeding_speed_coarse": (self.config["min_feeding_speed"], min(50.0, self.config["max_feeding_speed"])),
+            "feeding_speed_fine": (self.config["min_feeding_speed"], min(50.0, self.config["max_feeding_speed"])),
             "advance_amount_coarse": (self.config["min_advance_amount"], self.config["max_advance_amount"]),
             "advance_amount_fine": (self.config["min_advance_amount"], self.config["max_advance_amount"]),
             "vibration_frequency": (10.0, 50.0),
@@ -94,6 +103,13 @@ class AdaptiveThreeStageController:
             "score": 0
         }
         
+        # 周期完成标志
+        self._cycle_completed = False
+        self._completion_timestamp = None
+        self._weight_history = []
+        self._target_history = []
+        self._parameter_history = []
+        
         logger.info("自适应三阶段控制器初始化完成，当前阶段: %s", self.stage.value)
         
     def update(self, measurement_data):
@@ -109,13 +125,27 @@ class AdaptiveThreeStageController:
         # 1. 更新历史数据
         self._update_history(measurement_data)
         
-        # 2. 计算性能指标
+        # 2. 保存当前测量数据到周期历史
+        weight = measurement_data.get("weight", 0)
+        target = measurement_data.get("target_weight", 0)
+        
+        self._weight_history.append(weight)
+        self._target_history.append(target)
+        self._parameter_history.append(self.get_current_params())
+        
+        # 3. 如果周期已完成，直接返回当前参数
+        if self._cycle_completed:
+            # 已由on_packaging_completed处理过，清除完成标志
+            self._cycle_completed = False
+            return self.get_current_params()
+            
+        # 4. 计算性能指标
         self._calculate_performance()
         
-        # 3. 判断是否需要阶段转换
+        # 5. 判断是否需要阶段转换
         self._evaluate_stage_transition()
         
-        # 4. 根据当前阶段调整参数
+        # 6. 根据当前阶段调整参数
         if self.stage == ControllerStage.COARSE_SEARCH:
             self._coarse_search_adjustment()
         elif self.stage == ControllerStage.FINE_SEARCH:
@@ -123,14 +153,89 @@ class AdaptiveThreeStageController:
         else:  # MAINTENANCE
             self._maintenance_adjustment()
             
-        # 5. 记录参数调整历史
+        # 7. 记录参数调整历史
         self._record_parameter_adjustment()
         
-        # 6. 增加阶段周期计数
+        # 8. 增加阶段周期计数
         self.stage_cycle_count += 1
         
-        # 7. 返回新的控制参数
+        # 9. 返回新的控制参数
         return self.get_current_params()
+        
+    def on_packaging_completed(self, hopper_id, timestamp):
+        """
+        处理包装周期完成事件，由到量信号触发
+        
+        Args:
+            hopper_id (int): 料斗ID
+            timestamp (float): 到量时间戳
+        """
+        # 1. 确认是否为本控制器负责的料斗
+        if self.hopper_id is not None and self.hopper_id != hopper_id:
+            logger.debug(f"收到料斗{hopper_id}的到量信号，但本控制器负责料斗{self.hopper_id}，忽略")
+            return
+            
+        logger.info(f"料斗{hopper_id}包装周期完成")
+        
+        # 2. 标记当前周期完成
+        self._cycle_completed = True
+        self._completion_timestamp = timestamp
+        
+        # 3. 提取当前周期数据
+        cycle_data = self._extract_current_cycle_data()
+        
+        # 4. 计算性能指标
+        performance = self._calculate_performance(cycle_data)
+        
+        # 5. 记录性能指标
+        self.performance_metrics = performance
+        self.performance_history.append(performance)
+        
+        # 6. 根据性能评估调整控制策略
+        self._evaluate_stage_transition()
+        
+        # 7. 根据当前阶段执行参数调整
+        if self.stage == ControllerStage.COARSE_SEARCH:
+            self._coarse_search_adjustment()
+        elif self.stage == ControllerStage.FINE_SEARCH:
+            self._fine_search_adjustment()
+        else:  # MAINTENANCE
+            self._maintenance_adjustment()
+            
+        # 8. 记录参数调整
+        self._record_parameter_adjustment()
+        
+        # 9. 准备开始新周期
+        self._prepare_next_cycle()
+        
+        # 10. 增加阶段周期计数
+        self.stage_cycle_count += 1
+        
+        logger.info(f"完成包装周期处理，当前阶段：{self.stage.value}，性能得分：{performance['score']:.2f}")
+        
+    def _extract_current_cycle_data(self):
+        """
+        提取当前周期的相关数据
+        
+        Returns:
+            dict: 当前周期数据
+        """
+        # 从历史数据中提取当前周期的数据
+        return {
+            "weights": self._weight_history,
+            "targets": self._target_history,
+            "parameters": self._parameter_history,
+            "completion_time": self._completion_timestamp
+        }
+        
+    def _prepare_next_cycle(self):
+        """准备开始新的包装周期"""
+        # 清除或重置某些历史数据
+        self._weight_history = []
+        self._target_history = []
+        self._parameter_history = []
+        self._cycle_completed = False
+        self._completion_timestamp = None
         
     def get_current_params(self):
         """
@@ -170,6 +275,13 @@ class AdaptiveThreeStageController:
         self.stage_start_time = datetime.now()
         self.stage_cycle_count = 0
         
+        # 重置周期完成状态
+        self._cycle_completed = False
+        self._completion_timestamp = None
+        self._weight_history = []
+        self._target_history = []
+        self._parameter_history = []
+        
         if not keep_history:
             self.history = []
             self.param_history = []
@@ -195,6 +307,10 @@ class AdaptiveThreeStageController:
                     self.params[param] = max(min_val, min(max_val, value))
                 else:
                     self.params[param] = value
+                    
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"])
                     
         return self.get_current_params()
         
@@ -313,9 +429,16 @@ class AdaptiveThreeStageController:
         
         # 阶段转换逻辑
         if self.stage == ControllerStage.COARSE_SEARCH:
-            # 粗搜索 → 精搜索
+            # 1. 性能达标转换
             if current_score >= self.config["coarse_to_fine_threshold"]:
                 self._transition_to_stage(ControllerStage.FINE_SEARCH)
+                return
+                
+            # 2. 周期数达到上限,强制转换(新增)
+            if self.stage_cycle_count >= self.config["max_coarse_cycles"]:
+                logger.info("粗搜索周期达到上限,强制转入精搜索阶段")
+                self._transition_to_stage(ControllerStage.FINE_SEARCH)
+                return
                 
         elif self.stage == ControllerStage.FINE_SEARCH:
             # 精搜索 → 维持阶段
@@ -352,11 +475,30 @@ class AdaptiveThreeStageController:
         # 如果没有足够的历史数据，使用默认调整
         if len(self.history) < self.config["min_history_for_adjustment"]:
             return
+        
+        # 获取最近一次测量数据和目标重量
+        recent_data = self.history[-1]
+        weight = recent_data["weight"]
+        target = recent_data["target_weight"]
+        
+        # 计算相对误差(新增)
+        relative_error = abs(weight - target) / target if target > 0 else 0
+        
+        # 根据误差大小选择调整尺度(新增)
+        adjustment_scale = self.config["coarse_adjustment_scale"]
+        if relative_error > self.config["error_threshold_large"]:
+            # 大偏差,使用更激进的调整
+            adjustment_scale = self.config["coarse_adjustment_scale"] * 2.0
+            logger.info(f"检测到大偏差(相对误差:{relative_error:.2f}),使用激进调整策略")
+            
+            # 大偏差情况下,直接调整参数而不考虑历史方向
+            self._adjust_based_on_current_error(weight, target, adjustment_scale)
+            return
             
         # 分析最近的性能变化趋势
         if len(self.performance_history) < 3:
             # 数据不足，进行探索性调整
-            self._exploratory_adjustment(scale=self.config["coarse_adjustment_scale"])
+            self._exploratory_adjustment(scale=adjustment_scale)
             return
             
         # 获取最近几次的性能评分
@@ -367,10 +509,107 @@ class AdaptiveThreeStageController:
         
         if improving:
             # 性能在提升，继续当前方向
-            self._continue_current_direction(scale=self.config["coarse_adjustment_scale"])
+            self._continue_current_direction(scale=adjustment_scale)
         else:
             # 性能在下降，尝试新方向
-            self._try_alternative_direction(scale=self.config["coarse_adjustment_scale"])
+            self._try_alternative_direction(scale=adjustment_scale)
+            
+    def _adjust_based_on_current_error(self, weight, target, scale=1.0):
+        """根据当前误差直接调整参数(新增方法)"""
+        error = weight - target
+        
+        # 根据误差方向确定调整方向
+        if error > 0:  # 过重,需要减小参数
+            direction = -1
+            logger.info(f"当前重量过大({weight:.2f}>{target:.2f}),减小控制参数")
+        else:  # 过轻,需要增加参数
+            direction = 1
+            logger.info(f"当前重量过小({weight:.2f}<{target:.2f}),增加控制参数")
+            
+        # 优先调整快加提前量和快加速度
+        self._adjust_primary_parameters(direction, abs(error), scale)
+            
+    def _adjust_primary_parameters(self, direction, error_magnitude, scale):
+        """调整主要控制参数"""
+        # 调整快加提前量
+        current_advance = self.params["advance_amount_coarse"]
+        advance_adjustment = min(0.3 * scale, error_magnitude / 300)  # 最大调整0.3kg
+        new_advance = current_advance + direction * advance_adjustment
+        
+        # 应用边界限制
+        min_adv, max_adv = self.param_bounds["advance_amount_coarse"]
+        self.params["advance_amount_coarse"] = max(min_adv, min(max_adv, new_advance))
+        
+        # 调整快加速度
+        current_speed = self.params["feeding_speed_coarse"]
+        speed_adjustment = min(10.0 * scale, error_magnitude / 10)  # 最大调整10%
+        new_speed = current_speed + direction * speed_adjustment
+        
+        # 应用边界限制
+        min_spd, max_spd = self.param_bounds["feeding_speed_coarse"]
+        self.params["feeding_speed_coarse"] = max(min_spd, min(max_spd, new_speed))
+        
+        # 强制确保速度不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        
+        logger.info(f"主要参数调整: 快加提前量 {current_advance:.2f} -> {self.params['advance_amount_coarse']:.2f}, " 
+                   f"快加速度 {current_speed:.1f} -> {self.params['feeding_speed_coarse']:.1f}")
+
+    def _exploratory_adjustment(self, scale=1.0):
+        """
+        探索性地调整参数
+        
+        Args:
+            scale (float): 调整比例
+        """
+        # 探索参数权重
+        param_weights = {
+            "feeding_speed_coarse": 0.5,  # 50%的概率调整快加速度
+            "advance_amount_coarse": 0.3,  # 30%的概率调整快加提前量
+            "feeding_speed_fine": 0.15,   # 15%的概率调整慢加速度
+            "advance_amount_fine": 0.05    # 5%的概率调整慢加提前量
+        }
+        
+        # 按权重选择参数
+        weights = [param_weights[p] for p in ["feeding_speed_coarse", "advance_amount_coarse", 
+                                             "feeding_speed_fine", "advance_amount_fine"]]
+        total_weight = sum(weights)
+        norm_weights = [w/total_weight for w in weights]
+        
+        # 随机选择参数
+        param_to_adjust = np.random.choice(["feeding_speed_coarse", "advance_amount_coarse", 
+                                             "feeding_speed_fine", "advance_amount_fine"], p=norm_weights)
+        
+        # 随机选择调整方向
+        direction = np.random.choice([-1, 1])
+        
+        # 参数调整基准
+        base_adjustments = {
+            "feeding_speed_coarse": 8.0,     # 增大到8.0
+            "feeding_speed_fine": 2.0,
+            "advance_amount_coarse": 0.3,    # 增大到0.3
+            "advance_amount_fine": 0.1
+        }
+        
+        # 计算调整量
+        adjustment = direction * base_adjustments[param_to_adjust] * scale
+        
+        # 执行调整
+        if param_to_adjust in self.params:
+            current_value = self.params[param_to_adjust]
+            new_value = current_value + adjustment
+            
+            # 应用边界限制
+            if param_to_adjust in self.param_bounds:
+                min_val, max_val = self.param_bounds[param_to_adjust]
+                self.params[param_to_adjust] = max(min_val, min(max_val, new_value))
+        
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"])
+        
+        logger.info("探索性调整: %s 从 %.2f 调整到 %.2f", 
+                   param_to_adjust, current_value, self.params[param_to_adjust])
         
     def _fine_search_adjustment(self):
         """精搜索阶段的参数调整策略"""
@@ -412,50 +651,10 @@ class AdaptiveThreeStageController:
             
         # 根据漂移方向进行微调
         self._compensate_for_drift(drift, scale=self.config["maintenance_adjustment_scale"])
-        
-    def _exploratory_adjustment(self, scale=1.0):
-        """
-        探索性参数调整 (用于初始调整或重置后)
-        
-        Args:
-            scale (float): 调整比例
-        """
-        # 选择随机参数进行调整
-        param_to_adjust = np.random.choice([
-            "feeding_speed_coarse", 
-            "feeding_speed_fine",
-            "advance_amount_coarse", 
-            "advance_amount_fine"
-        ])
-        
-        # 调整方向
-        direction = np.random.choice([-1, 1])
-        
-        # 调整幅度基准
-        base_adjustments = {
-            "feeding_speed_coarse": 5.0,
-            "feeding_speed_fine": 2.0,
-            "advance_amount_coarse": 0.2,
-            "advance_amount_fine": 0.1
-        }
-        
-        # 计算调整量
-        adjustment = direction * base_adjustments[param_to_adjust] * scale
-        
-        # 应用调整
-        current_value = self.params[param_to_adjust]
-        new_value = current_value + adjustment
-        
-        # 应用参数边界
-        min_val, max_val = self.param_bounds[param_to_adjust]
-        self.params[param_to_adjust] = max(min_val, min(max_val, new_value))
-        
-        logger.info("探索性调整: %s 从 %.2f 调整到 %.2f", 
-                   param_to_adjust, current_value, self.params[param_to_adjust])
                    
     def _continue_current_direction(self, scale=1.0):
         """
-        沿着当前方向继续调整
+        沿当前方向继续调整
         
         Args:
             scale (float): 调整比例
@@ -510,9 +709,13 @@ class AdaptiveThreeStageController:
         logger.info("继续当前方向调整: %s 从 %.2f 调整到 %.2f", 
                    max_change_param, current_value, self.params[max_change_param])
                    
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"])
+                   
     def _try_alternative_direction(self, scale=1.0):
         """
-        尝试新的调整方向
+        尝试不同方向的调整
         
         Args:
             scale (float): 调整比例
@@ -570,9 +773,13 @@ class AdaptiveThreeStageController:
         logger.info("尝试新方向调整: %s 从 %.2f 调整到 %.2f", 
                    param_to_adjust, current_value, self.params[param_to_adjust])
                    
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"])
+                   
     def _refine_current_parameters(self, scale=0.5):
         """
-        微调当前参数 (精搜索阶段使用)
+        精细调整当前参数
         
         Args:
             scale (float): 调整比例
@@ -616,6 +823,10 @@ class AdaptiveThreeStageController:
         logger.info("微调参数: %s 从 %.2f 调整到 %.2f", 
                    param_to_adjust, current_value, self.params[param_to_adjust])
                    
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"])
+                   
     def _detect_performance_drift(self):
         """
         检测性能漂移
@@ -641,7 +852,7 @@ class AdaptiveThreeStageController:
         补偿性能漂移
         
         Args:
-            drift (float): 漂移量
+            drift (float): 漂移方向和大小
             scale (float): 调整比例
         """
         # 根据漂移方向选择调整参数
@@ -705,3 +916,7 @@ class AdaptiveThreeStageController:
         
         logger.info("漂移补偿调整: %s 从 %.2f 调整到 %.2f (漂移量: %.4f)", 
                    param_to_adjust, current_value, self.params[param_to_adjust], drift) 
+        
+        # 强制确保速度参数不超过50
+        self.params["feeding_speed_coarse"] = min(50.0, self.params["feeding_speed_coarse"])
+        self.params["feeding_speed_fine"] = min(50.0, self.params["feeding_speed_fine"]) 

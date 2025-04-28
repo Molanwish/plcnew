@@ -627,25 +627,28 @@ class SmartProductionTab(BaseTab):
             
             # 提取和转换控制参数
             if "feeding_speed_coarse" in params:
-                plc_params["coarse_speed"] = params["feeding_speed_coarse"]
+                plc_params["粗加料速度"] = [params["feeding_speed_coarse"]]
+                logger.info(f"写入参数 粗加料速度: {params['feeding_speed_coarse']} 到料斗 {self.hopper_index}")
                 
             if "feeding_speed_fine" in params:
-                plc_params["fine_speed"] = params["feeding_speed_fine"]
+                plc_params["精加料速度"] = [params["feeding_speed_fine"]]
+                logger.info(f"写入参数 精加料速度: {params['feeding_speed_fine']} 到料斗 {self.hopper_index}")
                 
             if "advance_amount_coarse" in params:
-                # 转换为克单位并考虑单位转换 (乘以1000转换为克)
-                plc_params["coarse_advance"] = params["advance_amount_coarse"] * 1000
+                # 转换为克单位并考虑单位转换
+                plc_params["粗加提前量"] = [params["advance_amount_coarse"]]
+                logger.info(f"写入参数 粗加提前量: {params['advance_amount_coarse']} 到料斗 {self.hopper_index}")
                 
             if "advance_amount_fine" in params:
-                # 转换为克单位并考虑单位转换 (乘以1000转换为克)
-                plc_params["fine_advance"] = params["advance_amount_fine"] * 1000
+                # 转换为克单位并考虑单位转换
+                plc_params["精加提前量"] = [params["advance_amount_fine"]]
+                logger.info(f"写入参数 精加提前量: {params['advance_amount_fine']} 到料斗 {self.hopper_index}")
                 
             # 将参数写入PLC
-            for param_name, param_value in plc_params.items():
-                logger.info(f"写入参数 {param_name}: {param_value} 到料斗 {self.hopper_index}")
-                self.comm_manager.write_parameter(param_name, param_value, hopper_index=self.hopper_index)
-                
+            if plc_params:
+                return self.comm_manager.write_parameters(plc_params)
             return True
+            
         except Exception as e:
             logger.error(f"写入控制参数失败: {str(e)}")
             return False
@@ -871,44 +874,40 @@ class SmartProductionTab(BaseTab):
         messagebox.showinfo("重置", "生产数据已重置")
         
     def _export_data(self):
-        """导出生产数据"""
+        """导出当前生产数据到CSV文件"""
         if not self.package_weights:
-            messagebox.showwarning("警告", "没有可导出的数据")
+            messagebox.showwarning("无数据", "当前没有生产数据可导出")
             return
-            
+        
         try:
-            # 创建数据目录
-            data_dir = "data"
-            os.makedirs(data_dir, exist_ok=True)
+            # 确保data目录存在
+            if not os.path.exists("data"):
+                os.makedirs("data")
+            
+            # 生成文件名(使用安全的时间格式)
+            timestamp = datetime.now()
+            timestamp_str = timestamp.strftime("%Y-%m-%d_%H-%M-%S")
             
             # 创建CSV文件
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            csv_filename = os.path.join(data_dir, f"production_data_{timestamp}.csv")
-            
-            with open(csv_filename, 'w', newline='') as csvfile:
-                import csv
-                writer = csv.writer(csvfile)
-                writer.writerow(['PackageID', 'Weight', 'TargetWeight', 'Deviation', 'ProductionTime', 'Timestamp'])
+            csv_filename = f"data/production_data_{timestamp_str}.csv"
+            with open(csv_filename, "w", encoding="utf-8") as f:
+                # 写入头部
+                f.write("包号,目标重量(克),实际重量(克),偏差(克),生产时间(秒)\n")
                 
-                for i in range(len(self.package_weights)):
-                    package_id = i + 1
-                    weight = self.package_weights[i]
-                    target = self.target_weights[i]
+                # 写入数据
+                for i, (weight, target, time_taken) in enumerate(zip(self.package_weights, self.target_weights, self.production_times)):
                     deviation = weight - target
-                    prod_time = self.production_times[i]
-                    timestamp = self.production_timestamps[i].isoformat()
-                    
-                    writer.writerow([package_id, weight, target, deviation, prod_time, timestamp])
-                    
-            # 导出图表
-            chart_filename = os.path.join(data_dir, f"production_chart_{timestamp}.png")
+                    f.write(f"{i+1},{target:.2f},{weight:.2f},{deviation:.2f},{time_taken:.2f}\n")
+            
+            # 生成并保存图表
+            chart_filename = f"data/production_chart_{timestamp_str}.png"
             self.figure.savefig(chart_filename, dpi=150)
             
-            messagebox.showinfo("导出成功", f"数据已导出到:\n{csv_filename}\n\n图表已保存到:\n{chart_filename}")
+            messagebox.showinfo("导出成功", f"生产数据已导出到:\n{csv_filename}\n\n图表已保存到:\n{chart_filename}")
             
         except Exception as e:
             logger.error(f"导出数据时出错: {str(e)}", exc_info=True)
-            messagebox.showerror("导出错误", f"导出数据时发生错误: {str(e)}")
+            messagebox.showerror("导出错误", f"导出数据时出错:\n{str(e)}")
             
     def on_tab_selected(self):
         """标签页被选中时调用"""

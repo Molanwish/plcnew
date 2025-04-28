@@ -70,3 +70,70 @@
 1.  **PLC 连接参数来源**: 通过 `config.json` 文件进行外部配置，由 `ConfigManager` 加载。
 2.  **地址映射来源**: **硬编码**在 `CommunicationManager` 类的 `register_map` 和 `control_map` 字典中。没有使用外部映射文件。
 3.  **其他配置**: UI 显示参数、数据保存选项等也在 `config.json` 中。
+
+# Algorithm and Parameter Constraints
+
+## Speed Parameter Limits
+- 快加速度参数(feeding_speed_coarse)必须小于等于50，超过则料斗不工作
+- 慢加速度参数(feeding_speed_fine)必须小于等于50，超过则料斗不工作
+- 所有涉及参数调整的方法中都必须添加速度参数硬限制检查
+- 在边界定义中使用min(50.0, config["max_feeding_speed"])确保不超过限制
+
+## Algorithm Tuning Best Practices
+- 粗搜索到精搜索的转换阈值不应高于0.7，避免长时间停留在粗搜索阶段
+- 稳定性评估窗口大小设为5，平衡稳定性评估和系统响应能力
+- 快加速度和快加提前量的参数调整权重应高于其他参数
+- 大偏差(>30%)情况需特殊处理，使用更激进的调整策略
+- 应设置粗搜索最大周期数(8次)，防止系统无法自动进入精搜索阶段
+
+## Learning Rate Guidelines
+- 粗搜索阶段使用较大学习率(1.5)，加快收敛
+- 精搜索阶段使用中等学习率(0.5)，平衡精度和速度
+- 维持阶段使用小学习率(0.1)，避免过度调整
+
+## Test Data Insights
+- 系统一般需要约20个包装周期才能达到稳定状态
+- 初始参数设置对收敛速度影响显著，合理设置初始值很重要
+- 在收集测试数据时，应跟踪至少30个连续包装周期以评估稳定性
+- 比较不同参数策略时，应在相同条件下测试至少20个周期
+
+# Code Implementation Patterns
+
+## Controller Class Hierarchy
+- 控制器类继承关系：BaseController -> AdaptiveController -> AdaptiveThreeStageController
+- 所有控制器类应实现update()、get_current_params()、reset()接口
+- 新增控制器时应在__init__.py中注册并保持接口一致
+
+## Data Management
+- 使用DataManager处理所有与数据存储相关的操作
+- 采用CSV格式存储重量数据，便于后续分析
+- 使用JSON格式存储参数配置
+
+## Error Handling
+- 对关键方法实现try-except保护
+- 详细记录异常信息，包括参数值和状态
+- 在日志中使用ERROR级别报告异常情况
+
+## Testing Approaches
+- 使用PackagingSimulator类模拟包装过程，便于算法测试
+- 创建完整的测试用例覆盖各种场景（正常、极限、异常）
+- 使用matplotlib进行数据可视化和分析
+
+# Project Workflow
+
+## Algorithm Development
+1. 先在模拟环境中测试算法性能
+2. 在真实环境中小规模测试
+3. 收集测试数据进行分析和优化
+4. 再次测试并迭代改进
+
+## Performance Tuning
+1. 首先优化包装准确性
+2. 其次优化系统稳定性
+3. 最后优化包装效率
+4. 进行平衡性能测试验证
+
+## Documentation
+- 所有算法参数调整需记录在algorithm_tuning_log.md文件中
+- 算法性能分析结果记录在自适应算法性能分析.md文件中
+- 代码中添加详细注释解释关键逻辑和参数作用
