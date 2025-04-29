@@ -1,0 +1,223 @@
+2025-04-28 13:09:51,016 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:10:26,011 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:18:12,881 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:18:12,882 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:18:12,892 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:18:12,893 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:18:12,893 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:18:12,893 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:18:12,894 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:18:12,894 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:18:12,894 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:18:12,894 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:18:12,894 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:18:12,894 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:18:12,895 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:18:13,896 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.96g (目标: 1000.0g, 误差: 1.96g)
+2025-04-28 13:18:13,897 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:18:13,897 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:18:13,898 - MicroAdjustmentCLI - ERROR - 测试过程中发生错误: AdaptiveThreeStageController._calculate_performance() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "D:\new\src\adaptive_algorithm\learning_system\test_micro_cli.py", line 153, in start
+    self.controller.update({
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+        "weight": cycle_result["weight"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "target_weight": self.args.target_weight,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "timestamp": datetime.datetime.now()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    })
+    ^^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 104, in update
+    return super().update(measurement_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\new\src\adaptive_algorithm\controller.py", line 143, in update
+    self._calculate_performance()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 360, in _calculate_performance
+    performance = super()._calculate_performance(cycle_data)
+TypeError: AdaptiveThreeStageController._calculate_performance() takes 1 positional argument but 2 were given
+2025-04-28 13:18:13,900 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250428_131813.json
+2025-04-28 13:18:13,900 - MicroAdjustmentCLI - INFO - 测试结束，共完成 0 个周期
+2025-04-28 13:21:24,534 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:21:24,535 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:21:24,536 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:21:24,536 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:21:24,536 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:21:24,536 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:21:24,537 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:21:24,537 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:21:24,537 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:21:24,537 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:21:24,537 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:21:24,537 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:21:24,538 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:21:25,539 - MicroAdjustmentCLI - INFO - 模拟重量: 999.07g (目标: 1000.0g, 误差: -0.93g)
+2025-04-28 13:21:25,539 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:21:25,540 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:21:25,540 - MicroAdjustmentCLI - ERROR - 测试过程中发生错误: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "D:\new\src\adaptive_algorithm\learning_system\test_micro_cli.py", line 153, in start
+    self.controller.update({
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+        "weight": cycle_result["weight"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "target_weight": self.args.target_weight,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "timestamp": datetime.datetime.now()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    })
+    ^^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 104, in update
+    return super().update(measurement_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\new\src\adaptive_algorithm\controller.py", line 143, in update
+    self._calculate_performance()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 365, in _calculate_performance
+    if performance["score"] < self.config["poor_performance_score"]:
+       ~~~~~~~~~~~^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-04-28 13:21:25,543 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250428_132125.json
+2025-04-28 13:21:25,543 - MicroAdjustmentCLI - INFO - 测试结束，共完成 0 个周期
+2025-04-28 13:22:38,848 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:22:38,849 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:22:38,850 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:22:38,850 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:22:38,850 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:22:38,850 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:22:38,851 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:22:38,851 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:22:38,851 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:22:38,851 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:22:38,851 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:22:38,851 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:22:38,852 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:22:39,853 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.35g (目标: 1000.0g, 误差: 1.35g)
+2025-04-28 13:22:39,853 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:22:39,853 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:22:39,854 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-28 13:22:39,854 - src.adaptive_algorithm.controller - INFO - 料斗1包装周期完成
+2025-04-28 13:22:39,854 - MicroAdjustmentCLI - ERROR - 测试过程中发生错误: AdaptiveControllerWithMicroAdjustment._calculate_performance() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "D:\new\src\adaptive_algorithm\learning_system\test_micro_cli.py", line 160, in start
+    self.controller.on_packaging_completed(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        hopper_id=self.args.hopper_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        timestamp=time.time()
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 115, in on_packaging_completed
+    super().on_packaging_completed(hopper_id, timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\new\src\adaptive_algorithm\controller.py", line 188, in on_packaging_completed
+    performance = self._calculate_performance(cycle_data)
+TypeError: AdaptiveControllerWithMicroAdjustment._calculate_performance() takes 1 positional argument but 2 were given
+2025-04-28 13:22:39,856 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250428_132239.json
+2025-04-28 13:22:39,857 - MicroAdjustmentCLI - INFO - 测试结束，共完成 0 个周期
+2025-04-28 13:23:49,803 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:23:49,804 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:23:49,805 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:23:49,805 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:23:49,805 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:23:49,806 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:23:49,806 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:23:49,806 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:23:49,806 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:23:49,807 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:23:49,807 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:23:49,807 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:23:49,809 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:23:50,809 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.30g (目标: 1000.0g, 误差: 2.30g)
+2025-04-28 13:23:50,810 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:23:50,810 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:23:50,810 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-28 13:23:50,810 - src.adaptive_algorithm.controller - INFO - 料斗1包装周期完成
+2025-04-28 13:23:50,810 - MicroAdjustmentCLI - ERROR - 测试过程中发生错误: AdaptiveThreeStageController._calculate_performance() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "D:\new\src\adaptive_algorithm\learning_system\test_micro_cli.py", line 160, in start
+    self.controller.on_packaging_completed(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        hopper_id=self.args.hopper_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        timestamp=time.time()
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 115, in on_packaging_completed
+    super().on_packaging_completed(hopper_id, timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\new\src\adaptive_algorithm\controller.py", line 188, in on_packaging_completed
+    performance = self._calculate_performance(cycle_data)
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 360, in _calculate_performance
+    performance = super()._calculate_performance(cycle_data) if cycle_data is not None else super()._calculate_performance()
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: AdaptiveThreeStageController._calculate_performance() takes 1 positional argument but 2 were given
+2025-04-28 13:23:50,813 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250428_132350.json
+2025-04-28 13:23:50,813 - MicroAdjustmentCLI - INFO - 测试结束，共完成 0 个周期
+2025-04-28 13:27:05,337 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:27:05,338 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:27:05,339 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:27:05,339 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:27:05,339 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:27:05,339 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:27:05,339 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:27:05,339 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:27:05,339 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:27:05,340 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:27:05,340 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:27:05,340 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:27:05,342 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:27:06,343 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.30g (目标: 1000.0g, 误差: 1.30g)
+2025-04-28 13:27:06,343 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:27:06,343 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:27:06,344 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-28 13:27:06,344 - MicroAdjustmentCLI - ERROR - 测试过程中发生错误: 'AdaptiveControllerWithMicroAdjustment' object has no attribute 'cycles_completed'
+Traceback (most recent call last):
+  File "D:\new\src\adaptive_algorithm\learning_system\test_micro_cli.py", line 160, in start
+    self.controller.on_packaging_completed(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        hopper_id=self.args.hopper_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        timestamp=time.time()
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\new\src\adaptive_algorithm\learning_system\micro_adjustment_controller.py", line 119, in on_packaging_completed
+    self.cycles_completed += 1
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AdaptiveControllerWithMicroAdjustment' object has no attribute 'cycles_completed'. Did you mean: '_cycle_completed'?
+2025-04-28 13:27:06,347 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250428_132706.json
+2025-04-28 13:27:06,347 - MicroAdjustmentCLI - INFO - 测试结束，共完成 0 个周期
+2025-04-28 13:28:19,882 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-28 13:28:19,884 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-28 13:28:19,885 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-28 13:28:19,885 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-28 13:28:19,885 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-28 13:28:19,885 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-28 13:28:19,885 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-28 13:28:19,885 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-28 13:28:19,886 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-28 13:28:19,886 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-28 13:28:19,886 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-28 13:28:19,886 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-28 13:28:19,887 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:28:20,888 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.76g (目标: 1000.0g, 误差: 0.76g)
+2025-04-28 13:28:20,888 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 2.00 -> 150.00
+2025-04-28 13:28:20,889 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 0.50 -> 30.00
+2025-04-28 13:28:20,889 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-28 13:28:20,889 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:2/5
+2025-04-28 13:28:20,889 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - ERROR - 保存包装记录失败: LearningDataRepository.save_packaging_record() missing 3 required positional arguments: 'actual_weight', 'packaging_time', and 'parameters'
+2025-04-28 13:28:20,889 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-28 13:30:04,796 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-28 13:30:05,796 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.88g (目标: 1000.0g, 误差: 0.88g)
+2025-04-28 13:30:05,796 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_coarse'超出安全边界，已调整: 150.00 -> 150.00
+2025-04-28 13:30:05,797 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 参数'advance_amount_fine'超出安全边界，已调整: 30.00 -> 30.00
+2025-04-28 13:30:05,797 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:3/5
+2025-04-28 13:30:05,797 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - ERROR - 保存包装记录失败: LearningDataRepository.save_packaging_record() missing 3 required positional arguments: 'actual_weight', 'packaging_time', and 'parameters'
+2025-04-28 13:30:05,797 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:35:35,324 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-29 09:56:40,781 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据

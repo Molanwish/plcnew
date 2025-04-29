@@ -1,0 +1,57 @@
+{
+  "db_path": "data/learning_system.db",
+  "hopper_id": 1,
+  "trigger_initial_analysis": true,
+  "material_type": "标准粉末",
+  
+  "analysis_manager": {
+    "min_records_for_analysis": 20,
+    "performance_drop_trigger": true,
+    "material_change_trigger": true,
+    "time_interval_trigger_hours": 24
+  },
+  
+  "controller": {
+    "min_feeding_speed": 10.0,
+    "max_feeding_speed": 50.0,
+    "min_advance_amount": 5.0,
+    "max_advance_amount": 60.0,
+    "default_parameters": {
+      "feeding_speed_coarse": 35.0,
+      "feeding_speed_fine": 15.0,
+      "advance_amount_coarse": 40.0,
+      "advance_amount_fine": 10.0,
+      "drop_compensation": 1.0
+    }
+  },
+  
+  "integrator": {
+    "application_mode": "manual_confirm",
+    "improvement_threshold": 5.0
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "file_path": "logs/sensitivity_system.log"
+  },
+  
+  "notifications": {
+    "enable_performance_drop_alerts": true,
+    "enable_recommendation_notifications": true,
+    "email_notifications": false
+  },
+  
+  "advanced": {
+    "analysis_batch_size": 50,
+    "parameter_constraints": {
+      "feeding_speed_coarse": {"min": 15.0, "max": 45.0},
+      "feeding_speed_fine": {"min": 5.0, "max": 25.0},
+      "advance_amount_coarse": {"min": 10.0, "max": 60.0},
+      "advance_amount_fine": {"min": 2.0, "max": 15.0}
+    },
+    "data_cleaning": true,
+    "outlier_detection": true,
+    "generate_charts": true,
+    "normalization_method": "min_max"
+  }
+} 

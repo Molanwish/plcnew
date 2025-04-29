@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "target_weight": 150.0,
+  "material_type": "石英砂",
+  "record_count": 50,
+  "golden_params": {
+    "feeding_speed_coarse": 35.0,
+    "feeding_speed_fine": 18.0,
+    "feeding_advance_coarse": 40.0,
+    "drop_compensation": 1.0
+  },
+  "sensitivity_data": {
+    "feeding_speed_coarse": {
+      "sensitivity": 0.07946459584445337,
+      "confidence": 0.08914164343289455,
+      "direction": -1,
+      "sample_size": 50
+    },
+    "feeding_speed_fine": {
+      "sensitivity": 0.07676203587254249,
+      "confidence": 0.08318140425075404,
+      "direction": 1,
+      "sample_size": 50
+    },
+    "feeding_advance_coarse": {
+      "sensitivity": 0.032458433082603246,
+      "confidence": 0.014872650760019757,
+      "direction": 1,
+      "sample_size": 50
+    }
+  },
+  "deviation_data": {
+    "feeding_speed_coarse": {
+      "golden_value": 35.0,
+      "avg_value": 34.29096695151471,
+      "min_value": 29.88026139021158,
+      "max_value": 40.102617735990265,
+      "deviation": -0.7090330484852885,
+      "relative_deviation": -0.020258087099579672,
+      "sample_size": 50
+    },
+    "feeding_speed_fine": {
+      "golden_value": 18.0,
+      "avg_value": 18.14075401403937,
+      "min_value": 16.345152265354915,
+      "max_value": 19.78619990285511,
+      "deviation": 0.14075401403936993,
+      "relative_deviation": 0.007819667446631663,
+      "sample_size": 50
+    },
+    "feeding_advance_coarse": {
+      "golden_value": 40.0,
+      "avg_value": 39.631681603482384,
+      "min_value": 32.29661869124326,
+      "max_value": 47.65813141381209,
+      "deviation": -0.36831839651761555,
+      "relative_deviation": -0.009207959912940388,
+      "sample_size": 50
+    },
+    "drop_compensation": {
+      "golden_value": 1.0,
+      "avg_value": 0.9934828701012417,
+      "min_value": 0.9505360610282146,
+      "max_value": 1.0445956872115625,
+      "deviation": -0.0065171298987583,
+      "relative_deviation": -0.0065171298987583,
+      "sample_size": 50
+    }
+  },
+  "recommendations": []
+}

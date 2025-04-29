@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "target_weight": 150.0,
+  "material_type": "石英砂",
+  "record_count": 50,
+  "golden_params": {
+    "feeding_speed_coarse": 35.0,
+    "feeding_speed_fine": 18.0,
+    "feeding_advance_coarse": 40.0,
+    "drop_compensation": 1.0
+  },
+  "sensitivity_data": {
+    "feeding_speed_coarse": {
+      "sensitivity": 0.022372151578373016,
+      "confidence": 0.006727768984328253,
+      "direction": 1,
+      "sample_size": 50
+    },
+    "feeding_speed_fine": {
+      "sensitivity": 0.0034939198268381607,
+      "confidence": 0.00016408974290627043,
+      "direction": 1,
+      "sample_size": 50
+    },
+    "feeding_advance_coarse": {
+      "sensitivity": 0.042258694146244294,
+      "confidence": 0.024004226128109818,
+      "direction": 1,
+      "sample_size": 50
+    }
+  },
+  "deviation_data": {
+    "feeding_speed_coarse": {
+      "golden_value": 35.0,
+      "avg_value": 34.82447183117669,
+      "min_value": 29.808469715292464,
+      "max_value": 39.81121237141446,
+      "deviation": -0.17552816882331257,
+      "relative_deviation": -0.005015090537808931,
+      "sample_size": 50
+    },
+    "feeding_speed_fine": {
+      "golden_value": 18.0,
+      "avg_value": 17.83994915296441,
+      "min_value": 16.233836881432516,
+      "max_value": 19.768060029495725,
+      "deviation": -0.16005084703558836,
+      "relative_deviation": -0.008891713724199354,
+      "sample_size": 50
+    },
+    "feeding_advance_coarse": {
+      "golden_value": 40.0,
+      "avg_value": 40.07930645613739,
+      "min_value": 32.45038562449076,
+      "max_value": 47.97214635010596,
+      "deviation": 0.07930645613738818,
+      "relative_deviation": 0.0019826614034347046,
+      "sample_size": 50
+    },
+    "drop_compensation": {
+      "golden_value": 1.0,
+      "avg_value": 1.0056434135394337,
+      "min_value": 0.9567708868420252,
+      "max_value": 1.046404353769716,
+      "deviation": 0.00564341353943365,
+      "relative_deviation": 0.00564341353943365,
+      "sample_size": 50
+    }
+  },
+  "recommendations": []
+}

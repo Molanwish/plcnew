@@ -1,0 +1,771 @@
+2025-04-29 09:57:37,108 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-29 09:57:37,109 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-29 09:57:37,120 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-29 09:57:37,120 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-29 09:57:37,120 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-29 09:57:37,120 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-29 09:57:37,121 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-29 09:57:37,121 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-29 09:57:37,121 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-29 09:57:37,121 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-29 09:57:37,121 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-29 09:57:37,121 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: -1
+2025-04-29 09:57:37,122 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:38,123 - MicroAdjustmentCLI - INFO - 模拟重量: 999.74g (目标: 1000.0g, 误差: -0.26g)
+2025-04-29 09:57:38,123 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:38,124 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:38,124 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-29 09:57:38,124 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:2/5
+2025-04-29 09:57:38,165 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 1, 目标重量: 1000.0g, 实际重量: 999.7427160284866g
+2025-04-29 09:57:38,165 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:38,166 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:39,166 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.91g (目标: 1000.0g, 误差: 2.91g)
+2025-04-29 09:57:39,166 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:39,167 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:39,167 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:3/5
+2025-04-29 09:57:39,170 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 2, 目标重量: 1000.0g, 实际重量: 1002.9116362390976g
+2025-04-29 09:57:39,171 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:39,171 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:40,172 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.44g (目标: 1000.0g, 误差: 2.44g)
+2025-04-29 09:57:40,172 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:40,172 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:40,212 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 3, 目标重量: 1000.0g, 实际重量: 1002.435843371402g
+2025-04-29 09:57:40,212 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:40,213 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:41,213 - MicroAdjustmentCLI - INFO - 模拟重量: 999.99g (目标: 1000.0g, 误差: -0.01g)
+2025-04-29 09:57:41,214 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:41,214 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:41,253 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 4, 目标重量: 1000.0g, 实际重量: 999.9915290120979g
+2025-04-29 09:57:41,254 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:41,255 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:42,255 - MicroAdjustmentCLI - INFO - 模拟重量: 997.35g (目标: 1000.0g, 误差: -2.65g)
+2025-04-29 09:57:42,256 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:42,256 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:42,294 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 5, 目标重量: 1000.0g, 实际重量: 997.3538425292586g
+2025-04-29 09:57:42,295 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:42,296 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:43,296 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.27g (目标: 1000.0g, 误差: 0.27g)
+2025-04-29 09:57:43,297 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:43,297 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:43,300 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 6, 目标重量: 1000.0g, 实际重量: 1000.2737787713849g
+2025-04-29 09:57:43,300 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:43,301 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:44,302 - MicroAdjustmentCLI - INFO - 模拟重量: 997.23g (目标: 1000.0g, 误差: -2.77g)
+2025-04-29 09:57:44,302 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:44,303 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:44,386 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 7, 目标重量: 1000.0g, 实际重量: 997.2305306053239g
+2025-04-29 09:57:44,387 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:44,388 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:45,389 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.54g (目标: 1000.0g, 误差: 0.54g)
+2025-04-29 09:57:45,389 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:45,389 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:45,429 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 8, 目标重量: 1000.0g, 实际重量: 1000.537561012257g
+2025-04-29 09:57:45,429 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:45,430 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:46,430 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.18g (目标: 1000.0g, 误差: 0.18g)
+2025-04-29 09:57:46,431 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:46,431 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:46,471 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 9, 目标重量: 1000.0g, 实际重量: 1000.1828577020857g
+2025-04-29 09:57:46,471 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:46,472 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:47,472 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.42g (目标: 1000.0g, 误差: 0.42g)
+2025-04-29 09:57:47,473 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:47,473 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:47,476 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 10, 目标重量: 1000.0g, 实际重量: 1000.4219401155319g
+2025-04-29 09:57:47,476 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:47,478 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095747.json
+2025-04-29 09:57:47,479 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:48,480 - MicroAdjustmentCLI - INFO - 模拟重量: 999.57g (目标: 1000.0g, 误差: -0.43g)
+2025-04-29 09:57:48,480 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:48,480 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:48,519 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 11, 目标重量: 1000.0g, 实际重量: 999.570797947347g
+2025-04-29 09:57:48,520 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:48,521 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:49,521 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.30g (目标: 1000.0g, 误差: 0.30g)
+2025-04-29 09:57:49,521 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:49,522 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:49,560 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 12, 目标重量: 1000.0g, 实际重量: 1000.2957042082635g
+2025-04-29 09:57:49,560 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:49,561 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:50,562 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.31g (目标: 1000.0g, 误差: 1.31g)
+2025-04-29 09:57:50,562 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:50,562 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:50,566 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 13, 目标重量: 1000.0g, 实际重量: 1001.308549734662g
+2025-04-29 09:57:50,566 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:50,567 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:51,567 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.57g (目标: 1000.0g, 误差: 0.57g)
+2025-04-29 09:57:51,568 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:51,568 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:51,571 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 14, 目标重量: 1000.0g, 实际重量: 1000.5705849194629g
+2025-04-29 09:57:51,572 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:51,572 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:52,573 - MicroAdjustmentCLI - INFO - 模拟重量: 999.15g (目标: 1000.0g, 误差: -0.85g)
+2025-04-29 09:57:52,573 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:52,573 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:52,592 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 15, 目标重量: 1000.0g, 实际重量: 999.1538782633719g
+2025-04-29 09:57:52,593 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:52,593 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:53,594 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.15g (目标: 1000.0g, 误差: 0.15g)
+2025-04-29 09:57:53,594 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:53,595 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:53,614 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 16, 目标重量: 1000.0g, 实际重量: 1000.1513720536482g
+2025-04-29 09:57:53,615 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:53,615 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:54,616 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.06g (目标: 1000.0g, 误差: 0.06g)
+2025-04-29 09:57:54,616 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:54,617 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:54,636 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 17, 目标重量: 1000.0g, 实际重量: 1000.0563008449614g
+2025-04-29 09:57:54,637 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:54,637 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:55,638 - MicroAdjustmentCLI - INFO - 模拟重量: 999.88g (目标: 1000.0g, 误差: -0.12g)
+2025-04-29 09:57:55,638 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:55,639 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:55,642 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 18, 目标重量: 1000.0g, 实际重量: 999.8778720058073g
+2025-04-29 09:57:55,643 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:55,644 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:56,644 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.51g (目标: 1000.0g, 误差: 0.51g)
+2025-04-29 09:57:56,645 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:56,645 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:56,665 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 19, 目标重量: 1000.0g, 实际重量: 1000.5094050442793g
+2025-04-29 09:57:56,665 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:56,666 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:57,667 - MicroAdjustmentCLI - INFO - 模拟重量: 998.98g (目标: 1000.0g, 误差: -1.02g)
+2025-04-29 09:57:57,667 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:57,667 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:57,687 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 20, 目标重量: 1000.0g, 实际重量: 998.9813750655212g
+2025-04-29 09:57:57,688 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:57,690 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095757.json
+2025-04-29 09:57:57,691 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:58,691 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.77g (目标: 1000.0g, 误差: 0.77g)
+2025-04-29 09:57:58,691 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:58,692 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:58,711 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 21, 目标重量: 1000.0g, 实际重量: 1000.7712353851347g
+2025-04-29 09:57:58,712 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:58,713 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:57:59,713 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.32g (目标: 1000.0g, 误差: 0.32g)
+2025-04-29 09:57:59,713 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:57:59,714 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:57:59,717 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 22, 目标重量: 1000.0g, 实际重量: 1000.3233607333664g
+2025-04-29 09:57:59,718 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:57:59,718 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:00,719 - MicroAdjustmentCLI - INFO - 模拟重量: 999.61g (目标: 1000.0g, 误差: -0.39g)
+2025-04-29 09:58:00,719 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:00,720 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:00,758 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 23, 目标重量: 1000.0g, 实际重量: 999.605692258663g
+2025-04-29 09:58:00,759 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:00,760 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:01,760 - MicroAdjustmentCLI - INFO - 模拟重量: 997.10g (目标: 1000.0g, 误差: -2.90g)
+2025-04-29 09:58:01,761 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:01,761 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:01,801 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 24, 目标重量: 1000.0g, 实际重量: 997.1036173724129g
+2025-04-29 09:58:01,801 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:01,802 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:02,802 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.40g (目标: 1000.0g, 误差: 2.40g)
+2025-04-29 09:58:02,803 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:02,803 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:02,807 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 25, 目标重量: 1000.0g, 实际重量: 1002.4001233767254g
+2025-04-29 09:58:02,807 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:02,809 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:03,809 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.26g (目标: 1000.0g, 误差: 2.26g)
+2025-04-29 09:58:03,810 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:03,810 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:03,813 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 26, 目标重量: 1000.0g, 实际重量: 1002.2612921693519g
+2025-04-29 09:58:03,814 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:03,815 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:04,816 - MicroAdjustmentCLI - INFO - 模拟重量: 998.66g (目标: 1000.0g, 误差: -1.34g)
+2025-04-29 09:58:04,816 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:04,816 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:04,820 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 27, 目标重量: 1000.0g, 实际重量: 998.6601451958202g
+2025-04-29 09:58:04,820 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:04,821 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:05,822 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.78g (目标: 1000.0g, 误差: 2.78g)
+2025-04-29 09:58:05,822 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:05,822 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:05,826 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 28, 目标重量: 1000.0g, 实际重量: 1002.7828428628036g
+2025-04-29 09:58:05,826 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:05,827 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:06,828 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.12g (目标: 1000.0g, 误差: 0.12g)
+2025-04-29 09:58:06,828 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:06,829 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:06,868 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 29, 目标重量: 1000.0g, 实际重量: 1000.1249962486464g
+2025-04-29 09:58:06,868 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:06,869 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:07,870 - MicroAdjustmentCLI - INFO - 模拟重量: 999.86g (目标: 1000.0g, 误差: -0.14g)
+2025-04-29 09:58:07,870 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:07,870 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:07,874 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 30, 目标重量: 1000.0g, 实际重量: 999.8644490494684g
+2025-04-29 09:58:07,874 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:07,877 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095807.json
+2025-04-29 09:58:07,877 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:08,878 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.51g (目标: 1000.0g, 误差: 0.51g)
+2025-04-29 09:58:08,878 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:08,878 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:08,917 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 31, 目标重量: 1000.0g, 实际重量: 1000.5122097334672g
+2025-04-29 09:58:08,918 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:08,919 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:09,920 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.88g (目标: 1000.0g, 误差: 1.88g)
+2025-04-29 09:58:09,920 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:09,920 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:09,923 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 32, 目标重量: 1000.0g, 实际重量: 1001.8781732669128g
+2025-04-29 09:58:09,923 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:09,924 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:10,925 - MicroAdjustmentCLI - INFO - 模拟重量: 999.55g (目标: 1000.0g, 误差: -0.45g)
+2025-04-29 09:58:10,926 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:10,926 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:10,968 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 33, 目标重量: 1000.0g, 实际重量: 999.5462338870608g
+2025-04-29 09:58:10,968 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:10,969 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:11,970 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.23g (目标: 1000.0g, 误差: 0.23g)
+2025-04-29 09:58:11,970 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:11,970 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:11,974 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 34, 目标重量: 1000.0g, 实际重量: 1000.2294108904445g
+2025-04-29 09:58:11,974 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:11,975 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:12,976 - MicroAdjustmentCLI - INFO - 模拟重量: 998.13g (目标: 1000.0g, 误差: -1.87g)
+2025-04-29 09:58:12,977 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:12,977 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:13,019 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 35, 目标重量: 1000.0g, 实际重量: 998.1293354268194g
+2025-04-29 09:58:13,019 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:13,020 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:14,021 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.19g (目标: 1000.0g, 误差: 0.19g)
+2025-04-29 09:58:14,022 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:14,022 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:14,061 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 36, 目标重量: 1000.0g, 实际重量: 1000.1919050518351g
+2025-04-29 09:58:14,062 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:14,062 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:15,063 - MicroAdjustmentCLI - INFO - 模拟重量: 1004.11g (目标: 1000.0g, 误差: 4.11g)
+2025-04-29 09:58:15,063 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:15,064 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:15,104 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 37, 目标重量: 1000.0g, 实际重量: 1004.1094250962174g
+2025-04-29 09:58:15,104 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:15,105 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:16,106 - MicroAdjustmentCLI - INFO - 模拟重量: 997.75g (目标: 1000.0g, 误差: -2.25g)
+2025-04-29 09:58:16,106 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:16,107 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:16,111 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 38, 目标重量: 1000.0g, 实际重量: 997.7466062773082g
+2025-04-29 09:58:16,111 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:16,112 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:17,114 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.61g (目标: 1000.0g, 误差: 2.61g)
+2025-04-29 09:58:17,114 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:17,114 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:17,118 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 39, 目标重量: 1000.0g, 实际重量: 1002.6137328621242g
+2025-04-29 09:58:17,118 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:17,119 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:18,120 - MicroAdjustmentCLI - INFO - 模拟重量: 997.40g (目标: 1000.0g, 误差: -2.60g)
+2025-04-29 09:58:18,120 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:18,120 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:18,159 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 40, 目标重量: 1000.0g, 实际重量: 997.4029210922037g
+2025-04-29 09:58:18,160 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:18,161 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095818.json
+2025-04-29 09:58:18,162 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:19,163 - MicroAdjustmentCLI - INFO - 模拟重量: 999.80g (目标: 1000.0g, 误差: -0.20g)
+2025-04-29 09:58:19,164 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:19,164 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:19,203 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 41, 目标重量: 1000.0g, 实际重量: 999.7987841174667g
+2025-04-29 09:58:19,203 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:19,204 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:20,204 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.82g (目标: 1000.0g, 误差: 0.82g)
+2025-04-29 09:58:20,205 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:20,205 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:20,209 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 42, 目标重量: 1000.0g, 实际重量: 1000.8249111435248g
+2025-04-29 09:58:20,209 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:20,210 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:21,211 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.13g (目标: 1000.0g, 误差: 2.13g)
+2025-04-29 09:58:21,211 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:21,211 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:21,250 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 43, 目标重量: 1000.0g, 实际重量: 1002.132028152116g
+2025-04-29 09:58:21,251 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:21,251 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:22,252 - MicroAdjustmentCLI - INFO - 模拟重量: 998.50g (目标: 1000.0g, 误差: -1.50g)
+2025-04-29 09:58:22,252 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:22,253 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:22,256 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 44, 目标重量: 1000.0g, 实际重量: 998.4965156919969g
+2025-04-29 09:58:22,256 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:22,257 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:23,258 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.38g (目标: 1000.0g, 误差: 0.38g)
+2025-04-29 09:58:23,258 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:23,259 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:23,298 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 45, 目标重量: 1000.0g, 实际重量: 1000.3750377739966g
+2025-04-29 09:58:23,298 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:23,300 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:24,301 - MicroAdjustmentCLI - INFO - 模拟重量: 999.02g (目标: 1000.0g, 误差: -0.98g)
+2025-04-29 09:58:24,301 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:24,301 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:24,305 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 46, 目标重量: 1000.0g, 实际重量: 999.0210650272127g
+2025-04-29 09:58:24,305 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:24,307 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:25,307 - MicroAdjustmentCLI - INFO - 模拟重量: 997.76g (目标: 1000.0g, 误差: -2.24g)
+2025-04-29 09:58:25,308 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:25,308 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:25,348 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 47, 目标重量: 1000.0g, 实际重量: 997.7635738829548g
+2025-04-29 09:58:25,348 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:25,349 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:26,350 - MicroAdjustmentCLI - INFO - 模拟重量: 1004.04g (目标: 1000.0g, 误差: 4.04g)
+2025-04-29 09:58:26,350 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:26,351 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:26,354 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 48, 目标重量: 1000.0g, 实际重量: 1004.0376346799613g
+2025-04-29 09:58:26,354 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:26,355 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:27,355 - MicroAdjustmentCLI - INFO - 模拟重量: 996.91g (目标: 1000.0g, 误差: -3.09g)
+2025-04-29 09:58:27,356 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:27,356 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:27,360 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 49, 目标重量: 1000.0g, 实际重量: 996.913699541691g
+2025-04-29 09:58:27,360 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:27,361 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:28,363 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.60g (目标: 1000.0g, 误差: 1.60g)
+2025-04-29 09:58:28,363 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:28,364 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:28,367 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 50, 目标重量: 1000.0g, 实际重量: 1001.599164418593g
+2025-04-29 09:58:28,367 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:28,370 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095828.json
+2025-04-29 09:58:28,371 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:29,372 - MicroAdjustmentCLI - INFO - 模拟重量: 998.60g (目标: 1000.0g, 误差: -1.40g)
+2025-04-29 09:58:29,372 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:29,373 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:29,393 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 51, 目标重量: 1000.0g, 实际重量: 998.597787663285g
+2025-04-29 09:58:29,393 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:29,394 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:30,395 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.30g (目标: 1000.0g, 误差: 1.30g)
+2025-04-29 09:58:30,395 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:30,396 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:30,416 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 52, 目标重量: 1000.0g, 实际重量: 1001.2998418204639g
+2025-04-29 09:58:30,416 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:30,417 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:31,418 - MicroAdjustmentCLI - INFO - 模拟重量: 999.53g (目标: 1000.0g, 误差: -0.47g)
+2025-04-29 09:58:31,418 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:31,419 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:31,423 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 53, 目标重量: 1000.0g, 实际重量: 999.5284891309051g
+2025-04-29 09:58:31,423 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:31,424 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:32,424 - MicroAdjustmentCLI - INFO - 模拟重量: 1003.14g (目标: 1000.0g, 误差: 3.14g)
+2025-04-29 09:58:32,425 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:32,425 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:32,428 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 54, 目标重量: 1000.0g, 实际重量: 1003.1353247651213g
+2025-04-29 09:58:32,428 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:32,429 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:33,430 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.57g (目标: 1000.0g, 误差: 2.57g)
+2025-04-29 09:58:33,430 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:33,430 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:33,450 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 55, 目标重量: 1000.0g, 实际重量: 1002.5695271854569g
+2025-04-29 09:58:33,450 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:33,451 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:34,451 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.62g (目标: 1000.0g, 误差: 2.62g)
+2025-04-29 09:58:34,451 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:34,452 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:34,471 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 56, 目标重量: 1000.0g, 实际重量: 1002.6165119292102g
+2025-04-29 09:58:34,472 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:34,472 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:35,473 - MicroAdjustmentCLI - INFO - 模拟重量: 997.91g (目标: 1000.0g, 误差: -2.09g)
+2025-04-29 09:58:35,473 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:35,473 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:35,493 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 57, 目标重量: 1000.0g, 实际重量: 997.912544836617g
+2025-04-29 09:58:35,493 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:35,494 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:36,494 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.53g (目标: 1000.0g, 误差: 0.53g)
+2025-04-29 09:58:36,495 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:36,495 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:36,499 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 58, 目标重量: 1000.0g, 实际重量: 1000.5297974818337g
+2025-04-29 09:58:36,499 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:36,500 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:37,500 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.74g (目标: 1000.0g, 误差: 2.74g)
+2025-04-29 09:58:37,501 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:37,501 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:37,505 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 59, 目标重量: 1000.0g, 实际重量: 1002.7442053006504g
+2025-04-29 09:58:37,505 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:37,506 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:38,506 - MicroAdjustmentCLI - INFO - 模拟重量: 998.32g (目标: 1000.0g, 误差: -1.68g)
+2025-04-29 09:58:38,507 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:38,507 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:38,510 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 60, 目标重量: 1000.0g, 实际重量: 998.324218893904g
+2025-04-29 09:58:38,510 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:38,513 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095838.json
+2025-04-29 09:58:38,514 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:39,514 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.65g (目标: 1000.0g, 误差: 1.65g)
+2025-04-29 09:58:39,515 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:39,515 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:39,554 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 61, 目标重量: 1000.0g, 实际重量: 1001.6474598924535g
+2025-04-29 09:58:39,555 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:39,556 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:40,556 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.78g (目标: 1000.0g, 误差: 1.78g)
+2025-04-29 09:58:40,556 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:40,557 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:40,560 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 62, 目标重量: 1000.0g, 实际重量: 1001.7763967284849g
+2025-04-29 09:58:40,560 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:40,561 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:41,562 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.40g (目标: 1000.0g, 误差: 1.40g)
+2025-04-29 09:58:41,562 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:41,562 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:41,566 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 63, 目标重量: 1000.0g, 实际重量: 1001.3973381969403g
+2025-04-29 09:58:41,566 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:41,566 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:42,567 - MicroAdjustmentCLI - INFO - 模拟重量: 998.69g (目标: 1000.0g, 误差: -1.31g)
+2025-04-29 09:58:42,567 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:42,567 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:42,606 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 64, 目标重量: 1000.0g, 实际重量: 998.6903832542372g
+2025-04-29 09:58:42,607 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:42,608 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:43,608 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.65g (目标: 1000.0g, 误差: 1.65g)
+2025-04-29 09:58:43,609 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:43,609 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:43,648 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 65, 目标重量: 1000.0g, 实际重量: 1001.6480303740237g
+2025-04-29 09:58:43,648 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:43,649 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:44,649 - MicroAdjustmentCLI - INFO - 模拟重量: 998.73g (目标: 1000.0g, 误差: -1.27g)
+2025-04-29 09:58:44,649 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:44,650 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:44,653 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 66, 目标重量: 1000.0g, 实际重量: 998.7262827081468g
+2025-04-29 09:58:44,653 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:44,654 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:45,655 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.33g (目标: 1000.0g, 误差: 0.33g)
+2025-04-29 09:58:45,655 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:45,655 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:45,659 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 67, 目标重量: 1000.0g, 实际重量: 1000.3338508130909g
+2025-04-29 09:58:45,659 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:45,660 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:46,661 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.32g (目标: 1000.0g, 误差: 1.32g)
+2025-04-29 09:58:46,661 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:46,661 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:46,664 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 68, 目标重量: 1000.0g, 实际重量: 1001.3218054047231g
+2025-04-29 09:58:46,664 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:46,665 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:47,666 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.58g (目标: 1000.0g, 误差: 1.58g)
+2025-04-29 09:58:47,666 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:47,666 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:47,704 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 69, 目标重量: 1000.0g, 实际重量: 1001.579669810451g
+2025-04-29 09:58:47,705 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:47,705 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:48,706 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.53g (目标: 1000.0g, 误差: 0.53g)
+2025-04-29 09:58:48,706 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:48,706 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:48,710 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 70, 目标重量: 1000.0g, 实际重量: 1000.5281562766905g
+2025-04-29 09:58:48,710 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:48,714 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095848.json
+2025-04-29 09:58:48,714 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:49,715 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.64g (目标: 1000.0g, 误差: 2.64g)
+2025-04-29 09:58:49,715 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:49,715 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:49,755 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 71, 目标重量: 1000.0g, 实际重量: 1002.6388959583147g
+2025-04-29 09:58:49,755 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:49,756 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:50,756 - MicroAdjustmentCLI - INFO - 模拟重量: 1003.19g (目标: 1000.0g, 误差: 3.19g)
+2025-04-29 09:58:50,757 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:50,757 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:50,796 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 72, 目标重量: 1000.0g, 实际重量: 1003.1929923512791g
+2025-04-29 09:58:50,797 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:50,797 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:51,798 - MicroAdjustmentCLI - INFO - 模拟重量: 999.88g (目标: 1000.0g, 误差: -0.12g)
+2025-04-29 09:58:51,798 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:51,799 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:51,838 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 73, 目标重量: 1000.0g, 实际重量: 999.8764787973871g
+2025-04-29 09:58:51,838 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:51,839 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:52,839 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.03g (目标: 1000.0g, 误差: 0.03g)
+2025-04-29 09:58:52,840 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:52,840 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:52,844 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 74, 目标重量: 1000.0g, 实际重量: 1000.0299358846788g
+2025-04-29 09:58:52,844 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:52,845 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:53,845 - MicroAdjustmentCLI - INFO - 模拟重量: 999.69g (目标: 1000.0g, 误差: -0.31g)
+2025-04-29 09:58:53,845 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:53,846 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:53,849 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 75, 目标重量: 1000.0g, 实际重量: 999.6862217619216g
+2025-04-29 09:58:53,849 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:53,850 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:54,851 - MicroAdjustmentCLI - INFO - 模拟重量: 999.89g (目标: 1000.0g, 误差: -0.11g)
+2025-04-29 09:58:54,851 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:54,851 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:54,890 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 76, 目标重量: 1000.0g, 实际重量: 999.8913972872544g
+2025-04-29 09:58:54,891 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:54,891 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:55,892 - MicroAdjustmentCLI - INFO - 模拟重量: 1003.74g (目标: 1000.0g, 误差: 3.74g)
+2025-04-29 09:58:55,892 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:55,892 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:55,931 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 77, 目标重量: 1000.0g, 实际重量: 1003.7449606620436g
+2025-04-29 09:58:55,931 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:55,932 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:56,932 - MicroAdjustmentCLI - INFO - 模拟重量: 997.91g (目标: 1000.0g, 误差: -2.09g)
+2025-04-29 09:58:56,933 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:56,933 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:56,937 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 78, 目标重量: 1000.0g, 实际重量: 997.9123251946613g
+2025-04-29 09:58:56,937 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:56,938 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:57,938 - MicroAdjustmentCLI - INFO - 模拟重量: 998.04g (目标: 1000.0g, 误差: -1.96g)
+2025-04-29 09:58:57,938 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:57,939 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:57,978 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 79, 目标重量: 1000.0g, 实际重量: 998.0404840873788g
+2025-04-29 09:58:57,978 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:57,979 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:58:58,979 - MicroAdjustmentCLI - INFO - 模拟重量: 998.46g (目标: 1000.0g, 误差: -1.54g)
+2025-04-29 09:58:58,979 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:58:58,980 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:58:59,019 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 80, 目标重量: 1000.0g, 实际重量: 998.461127779578g
+2025-04-29 09:58:59,020 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:58:59,023 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095859.json
+2025-04-29 09:58:59,023 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:00,024 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.63g (目标: 1000.0g, 误差: 0.63g)
+2025-04-29 09:59:00,024 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:00,024 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:00,042 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 81, 目标重量: 1000.0g, 实际重量: 1000.6328516087876g
+2025-04-29 09:59:00,043 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:00,043 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:01,044 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.60g (目标: 1000.0g, 误差: 2.60g)
+2025-04-29 09:59:01,044 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:01,044 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:01,048 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 82, 目标重量: 1000.0g, 实际重量: 1002.6027618253956g
+2025-04-29 09:59:01,048 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:01,049 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:02,050 - MicroAdjustmentCLI - INFO - 模拟重量: 999.34g (目标: 1000.0g, 误差: -0.66g)
+2025-04-29 09:59:02,050 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:02,050 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:02,094 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 83, 目标重量: 1000.0g, 实际重量: 999.3424159537253g
+2025-04-29 09:59:02,094 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:02,095 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:03,096 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.69g (目标: 1000.0g, 误差: 0.69g)
+2025-04-29 09:59:03,096 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:03,096 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:03,100 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 84, 目标重量: 1000.0g, 实际重量: 1000.69437629926g
+2025-04-29 09:59:03,100 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:03,101 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:04,101 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.89g (目标: 1000.0g, 误差: 2.89g)
+2025-04-29 09:59:04,102 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:04,102 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:04,141 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 85, 目标重量: 1000.0g, 实际重量: 1002.8908716896501g
+2025-04-29 09:59:04,141 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:04,141 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:05,142 - MicroAdjustmentCLI - INFO - 模拟重量: 999.64g (目标: 1000.0g, 误差: -0.36g)
+2025-04-29 09:59:05,142 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:05,142 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:05,145 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 86, 目标重量: 1000.0g, 实际重量: 999.6420616625121g
+2025-04-29 09:59:05,146 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:05,147 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:06,147 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.82g (目标: 1000.0g, 误差: 1.82g)
+2025-04-29 09:59:06,148 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:06,148 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:06,175 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 87, 目标重量: 1000.0g, 实际重量: 1001.8193276332698g
+2025-04-29 09:59:06,175 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:06,176 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:07,177 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.40g (目标: 1000.0g, 误差: 2.40g)
+2025-04-29 09:59:07,177 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:07,178 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:07,198 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 88, 目标重量: 1000.0g, 实际重量: 1002.3951819338293g
+2025-04-29 09:59:07,198 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:07,199 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:08,200 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.84g (目标: 1000.0g, 误差: 2.84g)
+2025-04-29 09:59:08,200 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:08,201 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:08,204 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 89, 目标重量: 1000.0g, 实际重量: 1002.8392375316067g
+2025-04-29 09:59:08,204 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:08,205 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:09,206 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.75g (目标: 1000.0g, 误差: 1.75g)
+2025-04-29 09:59:09,207 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:09,207 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:09,211 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 90, 目标重量: 1000.0g, 实际重量: 1001.7476186699665g
+2025-04-29 09:59:09,211 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:09,215 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095909.json
+2025-04-29 09:59:09,216 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:10,216 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.56g (目标: 1000.0g, 误差: 1.56g)
+2025-04-29 09:59:10,217 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:10,217 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:10,220 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 91, 目标重量: 1000.0g, 实际重量: 1001.5575723669247g
+2025-04-29 09:59:10,221 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:10,222 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:11,222 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.50g (目标: 1000.0g, 误差: 1.50g)
+2025-04-29 09:59:11,222 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:11,222 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:11,241 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 92, 目标重量: 1000.0g, 实际重量: 1001.4991462985068g
+2025-04-29 09:59:11,242 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:11,243 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:12,244 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.27g (目标: 1000.0g, 误差: 2.27g)
+2025-04-29 09:59:12,244 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:12,245 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:12,264 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 93, 目标重量: 1000.0g, 实际重量: 1002.2654008387234g
+2025-04-29 09:59:12,264 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:12,265 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:13,266 - MicroAdjustmentCLI - INFO - 模拟重量: 999.96g (目标: 1000.0g, 误差: -0.04g)
+2025-04-29 09:59:13,266 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:13,266 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:13,269 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 94, 目标重量: 1000.0g, 实际重量: 999.9559466022615g
+2025-04-29 09:59:13,269 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:13,270 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:14,270 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.30g (目标: 1000.0g, 误差: 0.30g)
+2025-04-29 09:59:14,271 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:14,271 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:14,274 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 95, 目标重量: 1000.0g, 实际重量: 1000.297395988087g
+2025-04-29 09:59:14,275 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:14,275 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:15,276 - MicroAdjustmentCLI - INFO - 模拟重量: 999.45g (目标: 1000.0g, 误差: -0.55g)
+2025-04-29 09:59:15,276 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:15,277 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:15,315 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 96, 目标重量: 1000.0g, 实际重量: 999.4506104509002g
+2025-04-29 09:59:15,316 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:15,316 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:16,317 - MicroAdjustmentCLI - INFO - 模拟重量: 999.17g (目标: 1000.0g, 误差: -0.83g)
+2025-04-29 09:59:16,317 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:16,317 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:16,359 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 97, 目标重量: 1000.0g, 实际重量: 999.1662622049354g
+2025-04-29 09:59:16,359 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:16,360 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:17,361 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.42g (目标: 1000.0g, 误差: 1.42g)
+2025-04-29 09:59:17,361 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:17,361 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:17,365 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 98, 目标重量: 1000.0g, 实际重量: 1001.4221305972715g
+2025-04-29 09:59:17,366 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:17,366 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:18,367 - MicroAdjustmentCLI - INFO - 模拟重量: 998.61g (目标: 1000.0g, 误差: -1.39g)
+2025-04-29 09:59:18,367 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:18,367 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:18,371 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 99, 目标重量: 1000.0g, 实际重量: 998.6113358017398g
+2025-04-29 09:59:18,371 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:18,372 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:19,372 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.73g (目标: 1000.0g, 误差: 1.73g)
+2025-04-29 09:59:19,373 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:19,373 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:19,418 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 100, 目标重量: 1000.0g, 实际重量: 1001.7264278887228g
+2025-04-29 09:59:19,418 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:19,422 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_095919.json
+2025-04-29 09:59:19,423 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 09:59:20,423 - MicroAdjustmentCLI - INFO - 模拟重量: 997.80g (目标: 1000.0g, 误差: -2.20g)
+2025-04-29 09:59:20,423 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 09:59:20,424 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 09:59:20,462 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 101, 目标重量: 1000.0g, 实际重量: 997.798836145201g
+2025-04-29 09:59:20,463 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 09:59:20,464 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:16,464 - MicroAdjustmentCLI - WARNING - 通信模块不可用，将使用模拟数据
+2025-04-29 10:00:16,466 - MicroAdjustmentCLI - INFO - 初始化微调控制器测试环境...
+2025-04-29 10:00:16,467 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 数据库架构检查/创建成功
+2025-04-29 10:00:16,467 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 学习数据仓库初始化完成，数据库路径：micro_adjustment_test.db
+2025-04-29 10:00:16,467 - MicroAdjustmentCLI - INFO - 学习数据仓库初始化完成，数据库路径: micro_adjustment_test.db
+2025-04-29 10:00:16,467 - src.adaptive_algorithm.controller - INFO - 自适应三阶段控制器初始化完成，当前阶段: 粗搜索
+2025-04-29 10:00:16,467 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 增强版自适应控制器(微调策略)初始化完成
+2025-04-29 10:00:16,468 - MicroAdjustmentCLI - INFO - 微调控制器初始化完成，料斗ID: 1
+2025-04-29 10:00:16,468 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 已保存当前参数作为回退点: {'feeding_speed_coarse': 40.0, 'feeding_speed_fine': 20.0, 'advance_amount_coarse': 2.0, 'advance_amount_fine': 0.5, 'vibration_frequency': 30.0, 'feeding_time': 3.0}
+2025-04-29 10:00:16,468 - MicroAdjustmentCLI - INFO - 已保存初始参数作为回退点
+2025-04-29 10:00:16,468 - MicroAdjustmentCLI - INFO - 环境设置完成
+2025-04-29 10:00:16,468 - MicroAdjustmentCLI - INFO - 开始测试，目标重量: 1000.0g, 最大周期数: 20
+2025-04-29 10:00:16,469 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:17,470 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.91g (目标: 1000.0g, 误差: 1.91g)
+2025-04-29 10:00:17,470 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:17,471 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:17,471 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:1/5
+2025-04-29 10:00:17,471 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:2/5
+2025-04-29 10:00:17,509 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 102, 目标重量: 1000.0g, 实际重量: 1001.9050781948365g
+2025-04-29 10:00:17,509 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:17,510 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:18,511 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.59g (目标: 1000.0g, 误差: 1.59g)
+2025-04-29 10:00:18,512 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:18,512 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:18,512 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 检测到性能不佳 (得分:0.00)，连续次数:3/5
+2025-04-29 10:00:18,550 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 103, 目标重量: 1000.0g, 实际重量: 1001.5850380721187g
+2025-04-29 10:00:18,550 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:18,551 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:19,552 - MicroAdjustmentCLI - INFO - 模拟重量: 998.36g (目标: 1000.0g, 误差: -1.64g)
+2025-04-29 10:00:19,553 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:19,553 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:19,557 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 104, 目标重量: 1000.0g, 实际重量: 998.358485454549g
+2025-04-29 10:00:19,557 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:19,558 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:20,559 - MicroAdjustmentCLI - INFO - 模拟重量: 1003.09g (目标: 1000.0g, 误差: 3.09g)
+2025-04-29 10:00:20,559 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:20,559 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:20,601 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 105, 目标重量: 1000.0g, 实际重量: 1003.094533452013g
+2025-04-29 10:00:20,601 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:20,602 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:21,602 - MicroAdjustmentCLI - INFO - 模拟重量: 1003.52g (目标: 1000.0g, 误差: 3.52g)
+2025-04-29 10:00:21,602 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:21,603 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:21,642 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 106, 目标重量: 1000.0g, 实际重量: 1003.5158261735144g
+2025-04-29 10:00:21,642 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:21,643 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:22,644 - MicroAdjustmentCLI - INFO - 模拟重量: 999.24g (目标: 1000.0g, 误差: -0.76g)
+2025-04-29 10:00:22,644 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:22,645 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:22,684 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 107, 目标重量: 1000.0g, 实际重量: 999.2398907145597g
+2025-04-29 10:00:22,684 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:22,685 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:23,686 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.71g (目标: 1000.0g, 误差: 1.71g)
+2025-04-29 10:00:23,686 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:23,686 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:23,725 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 108, 目标重量: 1000.0g, 实际重量: 1001.7140471310549g
+2025-04-29 10:00:23,726 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:23,726 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:24,727 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.75g (目标: 1000.0g, 误差: 1.75g)
+2025-04-29 10:00:24,728 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:24,728 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:24,731 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 109, 目标重量: 1000.0g, 实际重量: 1001.751520127185g
+2025-04-29 10:00:24,732 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:24,732 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:25,733 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.62g (目标: 1000.0g, 误差: 0.62g)
+2025-04-29 10:00:25,734 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:25,734 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:25,755 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 110, 目标重量: 1000.0g, 实际重量: 1000.6183235197511g
+2025-04-29 10:00:25,755 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:25,756 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:26,757 - MicroAdjustmentCLI - INFO - 模拟重量: 999.65g (目标: 1000.0g, 误差: -0.35g)
+2025-04-29 10:00:26,758 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:26,758 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:26,778 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 111, 目标重量: 1000.0g, 实际重量: 999.6490946837794g
+2025-04-29 10:00:26,778 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:26,779 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_100026.json
+2025-04-29 10:00:26,780 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:27,781 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.24g (目标: 1000.0g, 误差: 0.24g)
+2025-04-29 10:00:27,781 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:27,781 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:27,801 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 112, 目标重量: 1000.0g, 实际重量: 1000.2367099823808g
+2025-04-29 10:00:27,801 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:27,802 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:28,803 - MicroAdjustmentCLI - INFO - 模拟重量: 998.12g (目标: 1000.0g, 误差: -1.88g)
+2025-04-29 10:00:28,803 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:28,803 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:28,823 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 113, 目标重量: 1000.0g, 实际重量: 998.123748694848g
+2025-04-29 10:00:28,823 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:28,824 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:29,825 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.70g (目标: 1000.0g, 误差: 0.70g)
+2025-04-29 10:00:29,826 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:29,826 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:29,829 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 114, 目标重量: 1000.0g, 实际重量: 1000.6983214172675g
+2025-04-29 10:00:29,830 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:29,831 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:30,831 - MicroAdjustmentCLI - INFO - 模拟重量: 998.74g (目标: 1000.0g, 误差: -1.26g)
+2025-04-29 10:00:30,832 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:30,832 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:30,851 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 115, 目标重量: 1000.0g, 实际重量: 998.7405910758025g
+2025-04-29 10:00:30,851 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:30,852 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:31,853 - MicroAdjustmentCLI - INFO - 模拟重量: 1002.68g (目标: 1000.0g, 误差: 2.68g)
+2025-04-29 10:00:31,854 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:31,854 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:31,874 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 116, 目标重量: 1000.0g, 实际重量: 1002.6832563946239g
+2025-04-29 10:00:31,875 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:31,875 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:32,876 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.30g (目标: 1000.0g, 误差: 0.30g)
+2025-04-29 10:00:32,877 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:32,877 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:32,897 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 117, 目标重量: 1000.0g, 实际重量: 1000.2982654948044g
+2025-04-29 10:00:32,897 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:32,898 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:33,898 - MicroAdjustmentCLI - INFO - 模拟重量: 997.84g (目标: 1000.0g, 误差: -2.16g)
+2025-04-29 10:00:33,899 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:33,899 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:33,930 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 118, 目标重量: 1000.0g, 实际重量: 997.8401207883567g
+2025-04-29 10:00:33,931 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:33,931 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:34,932 - MicroAdjustmentCLI - INFO - 模拟重量: 998.85g (目标: 1000.0g, 误差: -1.15g)
+2025-04-29 10:00:34,933 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:34,933 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:34,972 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 119, 目标重量: 1000.0g, 实际重量: 998.8482123857094g
+2025-04-29 10:00:34,972 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:34,973 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:35,974 - MicroAdjustmentCLI - INFO - 模拟重量: 1000.29g (目标: 1000.0g, 误差: 0.29g)
+2025-04-29 10:00:35,974 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:35,974 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:36,017 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 120, 目标重量: 1000.0g, 实际重量: 1000.2865547354581g
+2025-04-29 10:00:36,018 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:36,018 - MicroAdjustmentCLI - INFO - 模拟包装周期...
+2025-04-29 10:00:37,019 - MicroAdjustmentCLI - INFO - 模拟重量: 1001.45g (目标: 1000.0g, 误差: 1.45g)
+2025-04-29 10:00:37,020 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 快加提前量计算的边界无效 [150.00, 5.00]，调整为合理值
+2025-04-29 10:00:37,020 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - WARNING - 慢加提前量计算的边界无效 [30.00, 5.00]，调整为合理值
+2025-04-29 10:00:37,060 - src.adaptive_algorithm.learning_system.learning_data_repo - INFO - 保存包装记录成功，ID: 121, 目标重量: 1000.0g, 实际重量: 1001.4507826896705g
+2025-04-29 10:00:37,060 - src.adaptive_algorithm.learning_system.micro_adjustment_controller - INFO - 料斗1包装周期完成
+2025-04-29 10:00:37,062 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_100037.json
+2025-04-29 10:00:37,063 - MicroAdjustmentCLI - INFO - 测试结果已保存到 test_results\test_results_20250429_100037.json
+2025-04-29 10:00:37,063 - MicroAdjustmentCLI - INFO - 测试结束，共完成 20 个周期

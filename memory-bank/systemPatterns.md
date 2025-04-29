@@ -49,6 +49,93 @@
 - `StatusBar`: 显示系统状态和操作反馈。
 - **事件驱动**: UI 通过 `EventDispatcher` 与后端逻辑交互。
 
+### 阶段三：智能分析引擎
+
+#### 数据采集与分析策略
+
+我们采用混合数据采集策略，结合以下两种方式：
+
+1. **简化实机测试**：
+   - 设计5-8组关键参数组合
+   - 生产实际包装产品并记录性能指标
+   - 为敏感度分析提供高质量初始数据
+   - 构建参数与性能之间的基础关联模型
+
+2. **自动数据采集机制**：
+   - 通过`SensitivityAnalysisManager`类实现
+   - 在生产过程中持续收集参数和性能数据
+   - 定期触发敏感度分析，更新参数影响模型
+   - 随时间积累更大的数据集，提高模型准确性
+
+#### 组件关系图（更新）
+
+```mermaid
+flowchart TD
+    OP[操作员] --> UI[用户界面]
+    UI --> PC[参数控制器]
+    PC --> MC[机械控制]
+    MC --> PF[生产设备]
+    
+    subgraph 数据层
+        DR[(数据仓库)]
+        PL[/包装记录日志/]
+    end
+    
+    subgraph 智能分析引擎
+        SAM[敏感度分析管理器]
+        SAE[敏感度分析引擎]
+        MCR[物料特性识别器]
+        PO[参数优化器]
+    end
+    
+    PF --> PL
+    PL --> DR
+    DR <--> SAM
+    SAM --> SAE
+    SAE --> MCR
+    MCR --> PO
+    PO --> PC
+```
+
+#### 数据流（更新）
+
+```mermaid
+flowchart LR
+    subgraph 输入
+        IP[操作员输入参数]
+        TP[目标重量/包装数量]
+        MP[物料属性]
+    end
+    
+    subgraph 处理
+        PS[参数设置]
+        PR[生产运行]
+        DC[数据采集]
+        SA[敏感度分析]
+        MR[物料识别]
+        PO[参数优化]
+    end
+    
+    subgraph 输出
+        PD[包装产品]
+        PR[性能报告]
+        PA[参数分析]
+        NP[新参数推荐]
+    end
+    
+    IP --> PS
+    TP --> PS
+    MP --> PS
+    PS --> PR
+    PR --> PD
+    PR --> DC
+    DC --> SA
+    SA --> MR
+    MR --> PO
+    PO --> NP
+    PO --> PA
+```
+
 ## 设计模式
 
 系统实现采用了以下设计模式：
@@ -69,6 +156,43 @@
 
 ### 组合模式
 - UI组件中使用组合模式构建复杂界面，如标签页包含多个子控件。
+
+### 观察者模式
+
+我们在自动数据采集机制中使用观察者模式：
+
+- `SensitivityAnalysisManager`作为观察者，监控包装记录数据
+- 当满足特定条件时（数据量达到阈值、性能低于预期等），触发分析过程
+- 分析结果通知到参数优化器，生成新的参数推荐
+
+```python
+class SensitivityAnalysisManager:
+    def __init__(self, data_repository):
+        self.data_repository = data_repository
+        self.analysis_engine = SensitivityAnalysisEngine()
+        self.observers = []
+        
+    def register_observer(self, observer):
+        self.observers.append(observer)
+        
+    def notify_observers(self, analysis_results):
+        for observer in self.observers:
+            observer.update(analysis_results)
+            
+    def check_analysis_conditions(self):
+        # 检查是否需要进行分析
+        recent_records = self.data_repository.get_recent_records(50)
+        if self._should_trigger_analysis(recent_records):
+            self._perform_analysis(recent_records)
+    
+    def _should_trigger_analysis(self, records):
+        # 触发条件：新数据量达到阈值或性能波动超过阈值
+        return len(records) >= 30 or self._detect_performance_drop(records)
+        
+    def _perform_analysis(self, records):
+        results = self.analysis_engine.analyze(records)
+        self.notify_observers(results)
+```
 
 ## 数据流
 
@@ -283,4 +407,318 @@
 1. **环境需求**：Python 3.9+, Tkinter
 2. **依赖管理**：requirements.txt列出依赖
 3. **安装脚本**：简化部署过程
-4. **更新机制**：支持在线更新 
+4. **更新机制**：支持在线更新
+
+## 敏感度分析系统架构
+
+敏感度分析系统是整个自适应控制系统的关键组成部分，负责分析参数对包装性能的影响并提供优化建议。系统遵循组件化、模块化设计原则，通过明确的责任分离实现高内聚低耦合的架构。
+
+### 系统架构图
+
+```
+┌────────────────────┐     ┌───────────────────────┐     ┌──────────────────┐
+│                    │     │                       │     │                  │
+│  数据收集和存储     │────▶│    敏感度分析引擎     │────▶│   参数推荐和应用  │
+│                    │     │                       │     │                  │
+└────────────────────┘     └───────────────────────┘     └──────────────────┘
+         ▲                           ▲                            │
+         │                           │                            │
+         └───────────────────────────┼────────────────────────────┘
+                                     │
+                              ┌──────────────┐
+                              │              │
+                              │  分析管理器   │
+                              │              │
+                              └──────────────┘
+```
+
+### 核心组件
+
+1. **数据收集和存储 (Data Collection & Storage)**
+   - 负责收集生产过程数据并存储
+   - 主要类: `LearningDataRepository`
+   - 与数据库交互，提供数据访问接口
+
+2. **敏感度分析引擎 (Sensitivity Analysis Engine)**
+   - 执行参数敏感度计算
+   - 主要类: `SensitivityAnalysisEngine`
+   - 实现各种分析算法和结果处理
+
+3. **分析管理器 (Analysis Manager)**
+   - 监控和触发分析过程
+   - 主要类: `SensitivityAnalysisManager`
+   - 负责判断何时执行分析及协调分析过程
+
+4. **参数推荐和应用 (Parameter Recommendation & Application)**
+   - 生成参数建议并应用到控制器
+   - 主要类: `SensitivityAnalysisIntegrator`
+   - 与控制系统集成，实现参数优化闭环
+
+## 设计模式
+
+敏感度分析系统应用了多种设计模式，确保代码可维护性、可扩展性和可测试性。
+
+### 1. 仓储模式 (Repository Pattern)
+
+**实现**: `LearningDataRepository`
+
+**用途**: 
+- 分离数据访问逻辑与业务逻辑
+- 提供统一的数据访问接口
+- 封装数据存储细节
+
+**示例**:
+```python
+class LearningDataRepository:
+    def __init__(self, db_path):
+        self.db_path = db_path
+        # 初始化数据库连接
+        
+    def get_records_by_material(self, material_type, limit=100):
+        """获取特定材料类型的记录"""
+        # 数据库查询实现
+        
+    def save_sensitivity_analysis_result(self, result):
+        """保存敏感度分析结果"""
+        # 数据存储实现
+```
+
+### 2. 策略模式 (Strategy Pattern)
+
+**实现**: 分析算法和规范化方法
+
+**用途**:
+- 允许在运行时选择不同分析算法
+- 支持多种参数敏感度计算方法
+- 便于添加新算法而无需修改现有代码
+
+**示例**:
+```python
+class SensitivityAnalysisEngine:
+    def __init__(self, normalization_method="min_max"):
+        self.normalization_method = normalization_method
+        
+    def _normalize_sensitivity(self, scores):
+        if self.normalization_method == "min_max":
+            return self._min_max_normalization(scores)
+        elif self.normalization_method == "z_score":
+            return self._z_score_normalization(scores)
+        # 其他规范化方法
+```
+
+### 3. 观察者模式 (Observer Pattern)
+
+**实现**: 分析完成回调和推荐通知
+
+**用途**:
+- 触发器与事件处理解耦
+- 当分析完成或有新推荐时通知相关组件
+- 支持多个观察者订阅分析结果
+
+**示例**:
+```python
+class SensitivityAnalysisManager:
+    def __init__(self, data_repository, analysis_engine, on_analysis_complete=None):
+        self.data_repository = data_repository
+        self.analysis_engine = analysis_engine
+        self.on_analysis_complete = on_analysis_complete
+        
+    def trigger_analysis(self):
+        # 执行分析
+        results = self.analysis_engine.analyze_parameter_sensitivity(data)
+        # 通知观察者
+        if self.on_analysis_complete:
+            self.on_analysis_complete(results)
+```
+
+### 4. 工厂模式 (Factory Pattern)
+
+**实现**: 分析引擎和集成器创建
+
+**用途**:
+- 封装复杂对象的创建逻辑
+- 根据配置创建不同类型的分析引擎
+- 减少组件间的直接依赖
+
+**示例**:
+```python
+def create_analysis_system(config):
+    """工厂方法创建完整的分析系统"""
+    # 创建数据仓库
+    repository = LearningDataRepository(config['db_path'])
+    
+    # 创建分析引擎
+    engine = SensitivityAnalysisEngine(
+        normalization_method=config.get('normalization_method', 'min_max')
+    )
+    
+    # 创建管理器
+    manager = SensitivityAnalysisManager(
+        repository, 
+        engine,
+        min_records=config.get('min_records_required', 50)
+    )
+    
+    # 创建集成器
+    integrator = SensitivityAnalysisIntegrator(
+        repository,
+        controller,
+        application_mode=config.get('application_mode', 'suggestion')
+    )
+    
+    return manager, integrator
+```
+
+### 5. 命令模式 (Command Pattern)
+
+**实现**: 参数推荐执行
+
+**用途**:
+- 封装参数调整请求为对象
+- 支持操作排队和回滚
+- 分离请求发送者和接收者
+
+**示例**:
+```python
+class ParameterAdjustment:
+    def __init__(self, parameter_name, new_value, old_value):
+        self.parameter_name = parameter_name
+        self.new_value = new_value
+        self.old_value = old_value
+        self.applied = False
+        
+    def apply(self, controller):
+        """应用参数调整"""
+        controller.set_parameter(self.parameter_name, self.new_value)
+        self.applied = True
+        
+    def rollback(self, controller):
+        """回滚参数调整"""
+        if self.applied:
+            controller.set_parameter(self.parameter_name, self.old_value)
+            self.applied = False
+```
+
+## 组件交互流程
+
+### 1. 数据收集流程
+
+```mermaid
+sequenceDiagram
+    participant Controller as 控制器
+    participant Repository as 数据仓库
+    participant DB as 数据库
+    
+    Controller->>Repository: 记录包装数据
+    Repository->>Repository: 验证和处理数据
+    Repository->>DB: 存储记录
+    Repository-->>Controller: 确认存储
+```
+
+### 2. 分析触发流程
+
+```mermaid
+sequenceDiagram
+    participant Manager as 分析管理器
+    participant Repository as 数据仓库
+    participant Engine as 分析引擎
+    
+    Manager->>Manager: 监控循环检查触发条件
+    Manager->>Repository: 查询数据状态
+    Repository-->>Manager: 返回数据统计
+    
+    alt 满足触发条件
+        Manager->>Repository: 获取分析数据
+        Repository-->>Manager: 返回相关记录
+        Manager->>Engine: 执行参数敏感度分析
+        Engine-->>Manager: 返回分析结果
+        Manager->>Repository: 存储分析结果
+        Manager->>Manager: 调用分析完成回调
+    end
+```
+
+### 3. 参数推荐流程
+
+```mermaid
+sequenceDiagram
+    participant Manager as 分析管理器
+    participant Engine as 分析引擎
+    participant Integrator as 集成器
+    participant Controller as 控制器
+    
+    Manager->>Engine: 分析完成，生成推荐
+    Engine->>Engine: 计算参数推荐值
+    Engine-->>Manager: 返回参数推荐
+    Manager->>Integrator: 传递参数推荐
+    
+    alt 自动应用模式
+        Integrator->>Integrator: 执行安全检查
+        Integrator->>Controller: 应用参数调整
+        Controller-->>Integrator: 确认参数更新
+    else 审批模式
+        Integrator->>Integrator: 将推荐加入待审批队列
+        Integrator-->>Manager: 通知推荐等待审批
+    else 建议模式
+        Integrator->>Integrator: 记录为一般建议
+        Integrator-->>Manager: 通知新建议可用
+    end
+```
+
+## 系统扩展点
+
+敏感度分析系统设计了以下扩展点，支持未来功能增强：
+
+1. **分析算法扩展**
+   - `SensitivityAnalysisEngine`支持添加新的分析算法
+   - 只需实现新的分析方法并在配置中启用
+
+2. **触发条件扩展**
+   - `SensitivityAnalysisManager`可添加新的分析触发条件
+   - 在`_should_trigger_analysis`方法中添加新的条件判断
+
+3. **参数应用策略扩展**
+   - `SensitivityAnalysisIntegrator`支持新的参数应用模式
+   - 通过扩展`apply_recommendations`方法实现
+
+4. **数据源扩展**
+   - `LearningDataRepository`设计为可支持多数据源
+   - 未来可添加新的数据提供者而不影响上层组件
+
+## 系统约束和边界
+
+1. **实时性约束**
+   - 分析过程可能较为耗时，不适合实时控制场景
+   - 推荐应用需考虑生产连续性，避免频繁干预
+
+2. **数据质量依赖**
+   - 分析结果质量强依赖于输入数据的质量和数量
+   - 系统设计包含数据验证和异常检测机制
+
+3. **安全边界**
+   - 参数调整受限于预定义的安全范围
+   - 集成器实现参数验证，拒绝潜在危险调整
+
+4. **资源限制**
+   - 长时间运行的监控过程需控制资源消耗
+   - 大数据集分析需考虑内存和CPU使用效率
+
+## 技术债务和改进计划
+
+1. **待解决的架构问题**
+   - 模块导入结构需优化，当前存在循环导入风险
+   - 配置管理需集中化，避免配置分散
+   - 错误处理策略需统一，加强系统健壮性
+
+2. **代码重构机会**
+   - 分离分析引擎中的算法实现为独立策略类
+   - 增强数据仓库的抽象，支持多种存储后端
+   - 优化线程安全性，改进并发处理
+
+3. **测试改进**
+   - 增加集成测试覆盖关键流程
+   - 添加性能测试评估系统在大数据集上的表现
+   - 实现模拟生产环境的端到端测试
+
+## 原有系统架构和模式
+
+// ... 现有系统架构内容 ... 

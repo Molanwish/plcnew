@@ -1,0 +1,614 @@
+{
+  "start_time": "2025-04-29T10:00:16.466048",
+  "target_weight": 1000.0,
+  "hopper_id": 1,
+  "cycles": [
+    {
+      "cycle_id": 1,
+      "timestamp": "2025-04-29T10:00:17.510174",
+      "weight": 1001.9050781948365,
+      "error": 1.9050781948365056,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.0,
+        "accuracy": 0.0,
+        "stability": 0.0
+      }
+    },
+    {
+      "cycle_id": 2,
+      "timestamp": "2025-04-29T10:00:18.550881",
+      "weight": 1001.5850380721187,
+      "error": 1.5850380721186639,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.0,
+        "accuracy": 0.0,
+        "stability": 0.0
+      }
+    },
+    {
+      "cycle_id": 3,
+      "timestamp": "2025-04-29T10:00:19.557368",
+      "weight": 998.358485454549,
+      "error": -1.6415145454509457,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9874452897697868,
+        "accuracy": 0.9828945639586463,
+        "stability": 0.9919960155809274,
+        "avg_error": 0.0017105436041353719,
+        "recent_weights": [
+          1001.9050781948365,
+          1001.5850380721187,
+          998.358485454549
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 4,
+      "timestamp": "2025-04-29T10:00:20.601649",
+      "weight": 1003.094533452013,
+      "error": 3.0945334520130245,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9845313861929135,
+        "accuracy": 0.9789297131013912,
+        "stability": 0.9901330592844356,
+        "avg_error": 0.002107028689860878,
+        "recent_weights": [
+          1001.5850380721187,
+          998.358485454549,
+          1003.094533452013
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 5,
+      "timestamp": "2025-04-29T10:00:21.643033",
+      "weight": 1003.5158261735144,
+      "error": 3.5158261735143697,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9804109716979336,
+        "accuracy": 0.9724937527634056,
+        "stability": 0.9883281906324616,
+        "avg_error": 0.0027506247236594467,
+        "recent_weights": [
+          998.358485454549,
+          1003.094533452013,
+          1003.5158261735144
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 6,
+      "timestamp": "2025-04-29T10:00:22.684970",
+      "weight": 999.2398907145597,
+      "error": -0.7601092854403078,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9829150019667878,
+        "accuracy": 0.9754317702967743,
+        "stability": 0.9903982336368014,
+        "avg_error": 0.0024568229703225675,
+        "recent_weights": [
+          1003.094533452013,
+          1003.5158261735144,
+          999.2398907145597
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 7,
+      "timestamp": "2025-04-29T10:00:23.726349",
+      "weight": 1001.7140471310549,
+      "error": 1.71404713105494,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9856411585371316,
+        "accuracy": 0.9800333913666346,
+        "stability": 0.9912489257076288,
+        "avg_error": 0.001996660863336539,
+        "recent_weights": [
+          1003.5158261735144,
+          999.2398907145597,
+          1001.7140471310549
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 8,
+      "timestamp": "2025-04-29T10:00:24.732283",
+      "weight": 1001.751520127185,
+      "error": 1.7515201271850174,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9900217016489506,
+        "accuracy": 0.9859144115210657,
+        "stability": 0.9941289917768356,
+        "avg_error": 0.0014085588478934218,
+        "recent_weights": [
+          999.2398907145597,
+          1001.7140471310549,
+          1001.751520127185
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 9,
+      "timestamp": "2025-04-29T10:00:25.755887",
+      "weight": 1000.6183235197511,
+      "error": 0.6183235197511294,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.991881341063514,
+        "accuracy": 0.9863870307400298,
+        "stability": 0.9973756513869982,
+        "avg_error": 0.001361296925997029,
+        "recent_weights": [
+          1001.7140471310549,
+          1001.751520127185,
+          1000.6183235197511
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 10,
+      "timestamp": "2025-04-29T10:00:26.778712",
+      "weight": 999.6490946837794,
+      "error": -0.3509053162206328,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9933189098178854,
+        "accuracy": 0.9909308367894774,
+        "stability": 0.9957069828462936,
+        "avg_error": 0.00090691632105226,
+        "recent_weights": [
+          1001.751520127185,
+          1000.6183235197511,
+          999.6490946837794
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 11,
+      "timestamp": "2025-04-29T10:00:27.801969",
+      "weight": 1000.2367099823808,
+      "error": 0.2367099823808303,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9969936343969104,
+        "accuracy": 0.9959802039388247,
+        "stability": 0.9980070648549961,
+        "avg_error": 0.0004019796061175309,
+        "recent_weights": [
+          1000.6183235197511,
+          999.6490946837794,
+          1000.2367099823808
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 12,
+      "timestamp": "2025-04-29T10:00:28.823913",
+      "weight": 998.123748694848,
+      "error": -1.8762513051519818,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9936658798434769,
+        "accuracy": 0.9917871113208219,
+        "stability": 0.9955446483661319,
+        "avg_error": 0.0008212888679178151,
+        "recent_weights": [
+          999.6490946837794,
+          1000.2367099823808,
+          998.123748694848
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 13,
+      "timestamp": "2025-04-29T10:00:29.830461",
+      "weight": 1000.6983214172675,
+      "error": 0.6983214172674934,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.992511602165002,
+        "accuracy": 0.9906290576506657,
+        "stability": 0.9943941466793383,
+        "avg_error": 0.0009370942349334351,
+        "recent_weights": [
+          1000.2367099823808,
+          998.123748694848,
+          1000.6983214172675
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 14,
+      "timestamp": "2025-04-29T10:00:30.852130",
+      "weight": 998.7405910758025,
+      "error": -1.259408924197487,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9908639139764767,
+        "accuracy": 0.9872200611779435,
+        "stability": 0.9945077667750098,
+        "avg_error": 0.001277993882205654,
+        "recent_weights": [
+          998.123748694848,
+          1000.6983214172675,
+          998.7405910758025
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 15,
+      "timestamp": "2025-04-29T10:00:31.875240",
+      "weight": 1002.6832563946239,
+      "error": 2.683256394623868,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9882438687573767,
+        "accuracy": 0.9845300442130371,
+        "stability": 0.9919576933017163,
+        "avg_error": 0.0015469955786962827,
+        "recent_weights": [
+          1000.6983214172675,
+          998.7405910758025,
+          1002.6832563946239
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 16,
+      "timestamp": "2025-04-29T10:00:32.897664",
+      "weight": 1000.2982654948044,
+      "error": 0.2982654948043546,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9888807188538826,
+        "accuracy": 0.985863563954581,
+        "stability": 0.9918978737531843,
+        "avg_error": 0.0014136436045419033,
+        "recent_weights": [
+          998.7405910758025,
+          1002.6832563946239,
+          1000.2982654948044
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 17,
+      "timestamp": "2025-04-29T10:00:33.931151",
+      "weight": 997.8401207883567,
+      "error": -2.1598792116433287,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9864891591065837,
+        "accuracy": 0.9828619963297615,
+        "stability": 0.990116321883406,
+        "avg_error": 0.0017138003670238505,
+        "recent_weights": [
+          1002.6832563946239,
+          1000.2982654948044,
+          997.8401207883567
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 18,
+      "timestamp": "2025-04-29T10:00:34.973155",
+      "weight": 998.8482123857094,
+      "error": -1.1517876142905834,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9914585959634117,
+        "accuracy": 0.9879668922642058,
+        "stability": 0.9949502996626177,
+        "avg_error": 0.0012033107735794223,
+        "recent_weights": [
+          1000.2982654948044,
+          997.8401207883567,
+          998.8482123857094
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 19,
+      "timestamp": "2025-04-29T10:00:36.018387",
+      "weight": 1000.2865547354581,
+      "error": 0.2865547354581395,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9914907112813767,
+        "accuracy": 0.9880059281286931,
+        "stability": 0.9949754944340601,
+        "avg_error": 0.001199407187130684,
+        "recent_weights": [
+          997.8401207883567,
+          998.8482123857094,
+          1000.2865547354581
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    },
+    {
+      "cycle_id": 20,
+      "timestamp": "2025-04-29T10:00:37.060894",
+      "weight": 1001.4507826896705,
+      "error": 1.4507826896705183,
+      "in_tolerance": true,
+      "params": {
+        "feeding_speed_coarse": 40.0,
+        "feeding_speed_fine": 20.0,
+        "advance_amount_coarse": 2.0,
+        "advance_amount_fine": 0.5,
+        "vibration_frequency": 30.0,
+        "feeding_time": 3.0
+      },
+      "metrics": {
+        "score": 0.9925241671984717,
+        "accuracy": 0.9903695832019359,
+        "stability": 0.9946787511950074,
+        "avg_error": 0.0009630416798064137,
+        "recent_weights": [
+          998.8482123857094,
+          1000.2865547354581,
+          1001.4507826896705
+        ],
+        "recent_targets": [
+          1000.0,
+          1000.0,
+          1000.0
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_cycles": 20,
+    "in_tolerance_cycles": 20,
+    "in_tolerance_rate": 100.0,
+    "avg_weight": 1000.5319200591144,
+    "std_dev": 1.6328066927225915,
+    "avg_abs_error": 1.4519056793537062
+  },
+  "end_time": "2025-04-29T10:00:37.062723"
+}
