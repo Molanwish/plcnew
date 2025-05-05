@@ -16,7 +16,8 @@ from ..config.sensitivity_analysis_config import (
     SENSITIVITY_ANALYSIS_CONFIG,
     DEFAULT_GOLDEN_PARAMETERS,
     MATERIAL_SENSITIVITY_PROFILES,
-    RECOMMENDATION_CONFIG
+    RECOMMENDATION_CONFIG,
+    MATERIAL_CLASSIFICATION_CONFIG
 )
 from .sensitivity_analysis_engine import SensitivityAnalysisEngine
 from .sensitivity_analysis_result import SensitivityAnalysisResult
@@ -281,7 +282,7 @@ class SensitivityAnalysisManager:
             analysis_result = self.analysis_engine.analyze_parameter_sensitivity(
                 records=recent_records,
                 material_type=self.last_material_type,
-                # 不传递window_size参数，让引擎使用默认值
+                window_size=self.config['analysis']['window_size']  # 显式传递window_size参数
             )
             
             # 保存分析结果到历史记录
@@ -543,17 +544,101 @@ class SensitivityAnalysisManager:
                     if abs(current - preset_value) / preset_value > 0.5:
                         # 不完全替换，而是向预设值靠拢30%
                         parameters[param] = current + 0.3 * (preset_value - current)
+                        logger.info(f"参数 {param} 与预设值差异较大，向预设值靠拢: {current:.2f} -> {parameters[param]:.2f}")
         
         # 应用物料特定的调整系数
         if material_type in RECOMMENDATION_CONFIG.get('material_adjustments', {}):
             material_adjustments = RECOMMENDATION_CONFIG['material_adjustments'][material_type]
+            logger.info(f"应用物料({material_type})特定的调整系数")
             
             for param, factor in material_adjustments.items():
                 if param in parameters:
                     # 已经计算的调整值
                     adjustment = parameters[param] - self.data_repository.get_current_parameters().get(param, parameters[param])
                     # 应用额外的物料特定调整因子
+                    old_value = parameters[param]
                     parameters[param] = parameters[param] + (adjustment * (factor - 1.0))
+                    logger.debug(f"参数 {param} 应用调整系数 {factor}: {old_value:.2f} -> {parameters[param]:.2f}")
+        
+        # 根据物料流动性特征调整参数
+        try:
+            # 首先查找物料的流动性特征
+            material_flow = None
+            if material_type in MATERIAL_CLASSIFICATION_CONFIG.get('classification_rules', {}).get('by_flow_characteristics', {}):
+                material_flow = MATERIAL_CLASSIFICATION_CONFIG['classification_rules']['by_flow_characteristics'][material_type]
+                
+            # 如果找到流动性特征且有对应的调整策略
+            if material_flow and material_flow in RECOMMENDATION_CONFIG.get('flow_characteristics_strategy', {}):
+                flow_strategy = RECOMMENDATION_CONFIG['flow_characteristics_strategy'][material_flow]
+                logger.info(f"应用流动性特征({material_flow})调整策略")
+                
+                for param, factor in flow_strategy.items():
+                    if param in parameters:
+                        # 获取当前建议的调整值
+                        current_value = parameters[param]
+                        original_value = self.data_repository.get_current_parameters().get(param, current_value)
+                        
+                        # 根据流动性特征调整参数变化量
+                        change = current_value - original_value
+                        old_value = parameters[param]
+                        
+                        # 应用流动性调整因子（保留原方向）
+                        parameters[param] = original_value + (change * factor)
+                        
+                        logger.debug(f"参数 {param} 应用流动性({material_flow})调整系数 {factor}: {old_value:.2f} -> {parameters[param]:.2f}")
+        except Exception as e:
+            logger.warning(f"应用流动性调整策略时出错: {e}")
+        
+        # 使用新增的物料策略选择
+        try:
+            # 检查是否有物料特定的策略映射
+            if material_type in RECOMMENDATION_CONFIG.get('material_strategy_mapping', {}):
+                strategy = RECOMMENDATION_CONFIG['material_strategy_mapping'][material_type]
+                logger.info(f"对物料 {material_type} 使用特定策略: {strategy}")
+                
+                # 这里我们可以根据策略特性进行额外的参数微调
+                if strategy == 'focus_most_sensitive':
+                    # 对于focus_most_sensitive策略，进一步增强主要参数的调整幅度
+                    # 首先找出变化最大的参数
+                    current_params = self.data_repository.get_current_parameters()
+                    max_change_param = None
+                    max_change_pct = 0
+                    
+                    for param, value in parameters.items():
+                        if param in current_params:
+                            change_pct = abs((value - current_params[param]) / current_params[param]) if current_params[param] != 0 else 0
+                            if change_pct > max_change_pct:
+                                max_change_pct = change_pct
+                                max_change_param = param
+                    
+                    # 增强主要参数的调整
+                    if max_change_param and max_change_pct > 0.01:  # 只有当变化超过1%时才增强
+                        old_value = parameters[max_change_param]
+                        # 增加20%的调整幅度
+                        change = parameters[max_change_param] - current_params[max_change_param]
+                        parameters[max_change_param] = current_params[max_change_param] + (change * 1.2)
+                        logger.debug(f"增强主要参数 {max_change_param} 的调整: {old_value:.2f} -> {parameters[max_change_param]:.2f}")
+                
+                elif strategy == 'adjust_all_proportionally':
+                    # 对于adjust_all_proportionally策略，确保所有参数都有一定的调整
+                    current_params = self.data_repository.get_current_parameters()
+                    min_adjustment_pct = 0.02  # 最小2%的调整幅度
+                    
+                    for param, value in parameters.items():
+                        if param in current_params:
+                            change_pct = abs((value - current_params[param]) / current_params[param]) if current_params[param] != 0 else 0
+                            
+                            # 如果调整幅度太小，应用最小调整
+                            if 0 < change_pct < min_adjustment_pct:
+                                direction = 1 if value > current_params[param] else -1
+                                parameters[param] = current_params[param] * (1 + direction * min_adjustment_pct)
+                                logger.debug(f"应用最小调整幅度到参数 {param}: {value:.2f} -> {parameters[param]:.2f}")
+        except Exception as e:
+            logger.warning(f"应用物料策略特性时出错: {e}")
+        
+        # 确保所有参数都在合理范围内
+        for param in list(parameters.keys()):
+            parameters[param] = self._apply_constraints(param, parameters[param])
     
     def _estimate_improvement(self, 
                             current_parameters: Dict[str, float],

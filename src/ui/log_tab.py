@@ -86,7 +86,26 @@ class LogTab(BaseTab):
                 # 尝试从队列获取日志记录，有超时以便能响应停止事件
                 if not self.log_queue.empty():
                     record = self.log_queue.get(block=False)
-                    self._display_log(record)
+                    
+                    # 检查记录是否为元组格式（来自BaseTab.log方法）
+                    if isinstance(record, tuple) and len(record) == 3:
+                        # 元组格式: (logger_name, level, message)
+                        logger_name, level, message = record
+                        
+                        # 创建一个模拟的日志记录
+                        dummy_record = logging.LogRecord(
+                            name=logger_name,
+                            level=level,
+                            pathname="",
+                            lineno=0,
+                            msg=message,
+                            args=(),
+                            exc_info=None
+                        )
+                        self._display_log(dummy_record)
+                    else:
+                        # 正常的LogRecord对象
+                        self._display_log(record)
                 else:
                     # 短暂等待以减少CPU使用
                     time.sleep(0.1)

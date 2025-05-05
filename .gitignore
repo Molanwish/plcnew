@@ -1,0 +1,61 @@
+# Python 字节码文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.venv/
+.venv-new/
+venv/
+ENV/
+
+# 分发文件
+dist/
+build/
+*.egg-info/
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件和缓存
+.cache/
+cache/
+temp/
+temp_output/
+*.tmp
+
+# 配置文件（包含敏感信息）
+config/plc_config.json
+*.ini
+*.conf
+*.env
+
+# 数据库文件
+*.db
+*.sqlite3
+
+# 测试数据和结果
+test_results/
+
+# 编辑器和IDE文件
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 备份文件
+*.bak
+*.backup
+*~
+
+# 监控数据（可以根据需要调整）
+monitoring_data/
+
+# 其他项目特定文件
+debug_data/
+.git/ 

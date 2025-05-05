@@ -1,0 +1,33 @@
+{
+  "id": "rec_002",
+  "recommendation_id": "rec_002",
+  "timestamp": "2025-04-25T17:06:35.058367",
+  "material_type": "fine_powder",
+  "status": "applied",
+  "applied_timestamp": "2025-04-27T17:06:35.058367",
+  "expected_improvement": 7.0,
+  "recommendation": {
+    "coarse_speed": 80.0,
+    "fine_speed": 20.0,
+    "coarse_advance": 2.0,
+    "fine_advance": 0.4
+  },
+  "performance_data": {
+    "before_metrics": {
+      "weight_accuracy": 96.0,
+      "filling_time": 3.0,
+      "cycle_time": 5.2
+    },
+    "after_metrics": {
+      "weight_accuracy": 98.0,
+      "filling_time": 2.5,
+      "cycle_time": 4.8
+    },
+    "improvement": {
+      "weight_accuracy": 2.0,
+      "filling_time": 16.7,
+      "cycle_time": 7.7
+    },
+    "overall_score": 8.8
+  }
+}

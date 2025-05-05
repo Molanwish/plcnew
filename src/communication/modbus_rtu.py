@@ -301,4 +301,27 @@ class ModbusRTUClient(ModbusClientBase):
             return True
         except Exception as e:
             print(f"写入多个线圈错误: {e}")
-            return False 
+            return False
+    
+    def read_holding_registers(self, address=None, count=None, slave=None, **kwargs):
+        """
+        添加兼容新版pymodbus API的read_holding_registers方法
+        
+        Args:
+            address: 起始地址（可以是命名参数）
+            count: 寄存器数量（可以是命名参数）
+            slave: 从站地址（可以是命名参数）
+            **kwargs: 其他参数
+            
+        Returns:
+            返回调用read_registers的结果
+        """
+        # 处理命名参数
+        if address is not None and count is not None:
+            # 直接调用原来的read_registers方法，确保参数顺序正确
+            return self.read_registers(address, count, slave)
+        else:
+            # 如果参数不完整，记录错误并返回None
+            import logging
+            logging.error("调用read_holding_registers方法时参数不完整")
+            return None 

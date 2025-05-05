@@ -613,6 +613,39 @@ class CommunicationManager:
                         logging.debug(f"更新目标重量缓存: 料斗 {i+1} -> {value}g")
 
             logging.info(f"参数读取完成，共读取 {len(result)} 个参数组")
+
+            # 插桩代码：记录PLC参数
+            try:
+                # 尝试导入监控模块
+                from src.monitoring.shared_memory import MonitoringDataHub
+                
+                # 获取监控中心实例
+                monitor = MonitoringDataHub.get_instance()
+                
+                # 针对料斗1的参数（索引0）进行记录
+                hopper_idx = 0
+                plc_params = {}
+                
+                # 提取关键参数
+                if "粗加料速度" in result and len(result["粗加料速度"]) > hopper_idx:
+                    plc_params["快加速度"] = result["粗加料速度"][hopper_idx]
+                
+                if "精加料速度" in result and len(result["精加料速度"]) > hopper_idx:
+                    plc_params["慢加速度"] = result["精加料速度"][hopper_idx]
+                
+                if "粗加提前量" in result and len(result["粗加提前量"]) > hopper_idx:
+                    plc_params["快加提前量"] = result["粗加提前量"][hopper_idx]
+                
+                if "精加提前量" in result and len(result["精加提前量"]) > hopper_idx:
+                    plc_params["落差值"] = result["精加提前量"][hopper_idx]
+                
+                # 更新监控数据
+                if plc_params:
+                    monitor.update_parameters(plc_params=plc_params)
+                    logging.info(f"已记录料斗{hopper_idx+1}的PLC参数到监控中心")
+            except Exception as e:
+                logging.warning(f"记录PLC参数到监控中心失败: {e}")
+            
             return result
             
         except Exception as e:
@@ -681,6 +714,99 @@ class CommunicationManager:
         except Exception as e:
             logging.error(f"写入线圈 {address} 错误: {e}", exc_info=True)
             return False
+            
+    def read_coil(self, address: int, unit: int = 1) -> bool:
+        """
+        读取单个线圈状态
+        
+        Args:
+            address (int): 线圈地址
+            unit (int, optional): 从站地址，默认为1
+            
+        Returns:
+            bool: 线圈状态，如果读取失败则返回False
+        """
+        if not self.is_connected or not self.client:
+            logging.error(f"读取线圈 {address} 失败：未连接")
+            return False
+            
+        try:
+            result = self.client.read_coils(address, 1, unit)
+            
+            # 提取结果
+            if result is not None:
+                if hasattr(result, 'bits'):
+                    return bool(result.bits[0]) if len(result.bits) > 0 else False
+                elif isinstance(result, list):
+                    return bool(result[0]) if len(result) > 0 else False
+                    
+            return False
+            
+        except Exception as e:
+            logging.error(f"读取线圈 {address} 错误: {e}")
+            return False
+
+    def read_hopper_phase_signals(self, hopper_index: int, unit: int = 1) -> Dict[str, bool]:
+        """读取指定料斗的各阶段信号(快加、慢加、精加)
+        
+        Args:
+            hopper_index (int): 料斗索引(1-6)
+            unit (int, optional): 从站地址，默认为1
+            
+        Returns:
+            Dict[str, bool]: 包含各阶段信号状态的字典，如果读取失败则相应值为False
+        """
+        if not self.is_connected or not self.client:
+            logging.error(f"读取料斗{hopper_index}阶段信号失败：未连接")
+            return {"fast_feeding": False, "slow_feeding": False, "fine_feeding": False}
+            
+        try:
+            # 根据料斗索引计算信号地址
+            # 注意：这里的地址映射需要根据实际PLC地址进行调整
+            # 假设快加、慢加、精加的线圈地址是连续的
+            base_addr = 100 + (hopper_index - 1) * 10
+            
+            # 读取三个阶段信号
+            fast_addr = base_addr  # 快加信号地址
+            slow_addr = base_addr + 1  # 慢加信号地址
+            fine_addr = base_addr + 2  # 精加信号地址
+            
+            fast_signal = self.read_coil(fast_addr, unit)
+            slow_signal = self.read_coil(slow_addr, unit)
+            fine_signal = self.read_coil(fine_addr, unit)
+            
+            result = {
+                "fast_feeding": fast_signal,
+                "slow_feeding": slow_signal,
+                "fine_feeding": fine_signal
+            }
+            
+            # 插桩代码：记录阶段信号状态
+            try:
+                # 尝试导入监控模块
+                from src.monitoring.shared_memory import MonitoringDataHub
+                
+                # 获取监控中心实例
+                monitor = MonitoringDataHub.get_instance()
+                
+                # 更新信号状态，添加料斗索引
+                signal_data = {
+                    "fast_feeding": fast_signal,
+                    "slow_feeding": slow_signal,
+                    "fine_feeding": fine_signal,
+                    "hopper_index": hopper_index
+                }
+                
+                monitor.update_signals(signal_data)
+                logging.debug(f"已记录料斗{hopper_index}的阶段信号到监控中心")
+            except Exception as e:
+                logging.warning(f"记录阶段信号到监控中心失败: {e}")
+            
+            return result
+            
+        except Exception as e:
+            logging.error(f"读取料斗{hopper_index}阶段信号出错: {e}")
+            return {"fast_feeding": False, "slow_feeding": False, "fine_feeding": False}
 
     def _restore_persistent_states(self, slave_id: int = 1) -> None:
         """恢复持久化线圈状态到PLC"""
@@ -1386,6 +1512,40 @@ class CommunicationManager:
         except Exception as e:
             logging.error(f"测试参数读取总体错误: {e}", exc_info=True)
             return {}
+            
+    def test_weight_read_compare(self) -> None:
+        """
+        测试并比较新旧重量读取方法的结果
+        """
+        logging.info("===== 开始重量读取方法对比测试 =====")
+        
+        if not self.is_connected or not self.client:
+            logging.error("测试失败：未连接或客户端未初始化")
+            return
+            
+        try:
+            # 测试所有料斗
+            for hopper_id in range(1, 7):  # 1-6号料斗
+                # 旧方法
+                old_start = time.time()
+                old_result = self.read_weight(hopper_id)
+                old_time = time.time() - old_start
+                
+                # 新方法
+                new_start = time.time()
+                new_result = self.read_weight_v2(hopper_id)
+                new_time = time.time() - new_start
+                
+                # 打印比较结果
+                logging.info(f"料斗{hopper_id}重量对比:")
+                logging.info(f"  旧方法: {old_result}克 (耗时: {old_time:.3f}秒)")
+                logging.info(f"  新方法: {new_result}克 (耗时: {new_time:.3f}秒)")
+                logging.info(f"  差异: {abs(new_result - old_result)}克")
+                
+            logging.info("===== 重量读取对比测试结束 =====")
+            
+        except Exception as e:
+            logging.error(f"重量读取对比测试错误: {e}", exc_info=True)
 
     def send_command(self, command: str, hopper_id: int = -1, slave_id: int = 1) -> bool:
         """发送控制命令 - M300/301 及斗启动/停止 设置常驻状态, 其他为脉冲
@@ -1419,15 +1579,38 @@ class CommunicationManager:
                         "stop": "斗停止",
                         "zero_weight": "斗清零",
                         "discharge": "斗放料",
-                        "clear": "斗清料"
+                        "clear": "斗清料",
+                        # 添加微调控制器命令映射
+                        "coarse_feed": "斗粗加料",
+                        "fine_feed": "斗细加料",
+                        "jog": "斗点动"
                     }
+                    
+                    # 支持带参数的命令
+                    command_args = {}
+                    if isinstance(hopper_id, dict):
+                        command_args = hopper_id
+                        hopper_id = extracted_hopper - 1
+                    else:
+                        hopper_id = extracted_hopper - 1
                     
                     if actual_command in command_mapping:
                         # 转换为标准命令并设置料斗ID
                         standard_command = command_mapping[actual_command]
-                        # 料斗编号从1开始，但内部从0开始索引
-                        hopper_id = extracted_hopper - 1
-                        return self._send_standard_command(standard_command, hopper_id, slave_id)
+                        
+                        # 处理微调控制器特殊命令
+                        if actual_command == "coarse_feed":
+                            logging.info(f"粗加料命令，料斗:{hopper_id+1}, 速度:{command_args.get('speed', 20)}")
+                            return self._handle_feed_command(hopper_id, "粗加料", command_args.get('speed', 20), slave_id)
+                        elif actual_command == "fine_feed":
+                            logging.info(f"细加料命令，料斗:{hopper_id+1}, 速度:{command_args.get('speed', 5)}")
+                            return self._handle_feed_command(hopper_id, "细加料", command_args.get('speed', 5), slave_id)
+                        elif actual_command == "jog":
+                            logging.info(f"点动命令，料斗:{hopper_id+1}, 大小:{command_args.get('size', 0.1)}")
+                            return self._handle_jog_command(hopper_id, command_args.get('size', 0.1), slave_id)
+                        else:
+                            # 对于其他标准命令，使用现有处理方式
+                            return self._send_standard_command(standard_command, hopper_id, slave_id)
                     else:
                         logging.error(f"未知的hopper命令: {actual_command}")
                         return False
@@ -1438,6 +1621,107 @@ class CommunicationManager:
             # 标准命令直接处理
             return self._send_standard_command(command, hopper_id, slave_id)
     
+    def _handle_feed_command(self, hopper_id: int, feed_type: str, speed: float, slave_id: int = 1) -> bool:
+        """处理加料命令（粗加料或细加料）
+        
+        Args:
+            hopper_id (int): 料斗ID（从0开始）
+            feed_type (str): 加料类型，"粗加料"或"细加料"
+            speed (float): 加料速度
+            slave_id (int): 从站地址
+            
+        Returns:
+            bool: 命令发送是否成功
+        """
+        try:
+            # 1. 发送启动命令（相当于斗启动）
+            start_command = "斗启动"
+            start_result = self._send_standard_command(start_command, hopper_id, slave_id)
+            if not start_result:
+                logging.error(f"启动{feed_type}失败：无法发送启动命令")
+                return False
+                
+            # 2. 设置加料速度
+            if feed_type == "粗加料":
+                param_name = "粗加料速度"
+            else:
+                param_name = "精加料速度"
+                
+            # 创建参数字典
+            params = {param_name: [0, 0, 0, 0, 0, 0]}
+            params[param_name][hopper_id] = float(speed)
+            
+            # 写入参数
+            params_result = self.write_parameters(params)
+            if not params_result:
+                logging.warning(f"设置{feed_type}速度失败：无法写入参数")
+                # 继续执行，因为启动命令已经发送
+            
+            return True
+            
+        except Exception as e:
+            logging.error(f"执行{feed_type}命令失败: {e}", exc_info=True)
+            return False
+            
+    def _handle_jog_command(self, hopper_id: int, jog_size: float, slave_id: int = 1) -> bool:
+        """处理点动命令
+        
+        Args:
+            hopper_id (int): 料斗ID（从0开始）
+            jog_size (float): 点动量大小
+            slave_id (int): 从站地址
+            
+        Returns:
+            bool: 命令发送是否成功
+        """
+        try:
+            # 设置点动时间（根据jog_size计算合适的时间）
+            jog_time_ms = int(jog_size * 1000)  # 简单地将点动量转换为毫秒
+            jog_time_ms = max(50, min(500, jog_time_ms))  # 限制在50-500ms范围内
+            
+            # 1. 设置点动时间
+            params = {"点动时间": [jog_time_ms]}
+            time_result = self.write_parameters(params)
+            if not time_result:
+                logging.warning("设置点动时间失败，将使用默认值")
+            
+            # 2. 发送点动脉冲（使用斗启动作为点动的替代）
+            delay_time = jog_time_ms / 1000
+            logging.info(f"点动命令，料斗:{hopper_id+1}，时间:{delay_time}秒")
+            
+            # 获取斗启动命令地址
+            start_addr = self._get_command_address("斗启动", hopper_id)
+            if start_addr is None:
+                logging.error(f"无法获取点动命令地址：斗{hopper_id+1}")
+                return False
+                
+            # 发送ON信号
+            result = self.client.write_coil(start_addr, True, unit=slave_id)
+            
+            if result:
+                # 使用线程在延时后发送OFF信号
+                def reset_coil_after_delay():
+                    time.sleep(delay_time)
+                    try:
+                        if self.client and self.is_connected:
+                            reset_result = self.client.write_coil(start_addr, False, unit=slave_id)
+                            if reset_result:
+                                logging.debug(f"点动结束：料斗{hopper_id+1}")
+                            else:
+                                logging.warning(f"点动结束失败：料斗{hopper_id+1}")
+                    except Exception as e:
+                        logging.error(f"点动结束时出错: {e}")
+                
+                threading.Thread(target=reset_coil_after_delay, daemon=True).start()
+                return True
+            else:
+                logging.error(f"发送点动命令失败：料斗{hopper_id+1}")
+                return False
+            
+        except Exception as e:
+            logging.error(f"执行点动命令失败: {e}", exc_info=True)
+            return False
+
     def _send_standard_command(self, command: str, hopper_id: int = -1, slave_id: int = 1) -> bool:
         """发送标准格式命令到PLC
         
@@ -1542,11 +1826,25 @@ class CommunicationManager:
             logging.error(f"发送命令失败 - {command} (M{internal_addr}): {e}", exc_info=True)
             return False
             
-    def read_weight(self, hopper_index: int) -> float:
+    def read_weight(self, hopper_index: int, slave_id: int = 1) -> float:
         """读取指定料斗的当前重量
         
         Args:
             hopper_index (int): 料斗索引，从1开始
+            slave_id (int, optional): 从站地址，默认为1
+            
+        Returns:
+            float: 当前重量，单位为克
+        """
+        # 直接使用新实现，解决重量读取问题
+        return self.read_weight_v2(hopper_index, slave_id)
+
+    def read_weight_v2(self, hopper_index: int, slave_id: int = 1) -> float:
+        """新版重量读取方法，直接从PLC读取指定料斗的当前重量，不使用缓存
+        
+        Args:
+            hopper_index (int): 料斗索引，从1开始
+            slave_id (int): 从站地址，默认为1
             
         Returns:
             float: 当前重量，单位为克
@@ -1564,11 +1862,53 @@ class CommunicationManager:
                 logging.error(f"无效的料斗索引: {hopper_index}，应为1-6")
                 return 0.0
                 
-            # 返回缓存的当前重量
+            # 计算正确的寄存器地址
+            addr = 700 + (internal_index * 2)
+            
+            # 尝试使用read_holding_registers方法（推荐方式）
+            try:
+                logging.debug(f"V2方式读取料斗{hopper_index}重量，地址={addr}")
+                result = self.client.read_holding_registers(address=addr, count=2, slave=slave_id)
+                
+                if result and hasattr(result, 'registers') and len(result.registers) >= 1:
+                    raw_weight = result.registers[0]
+                    weight = raw_weight / 10.0
+                    rounded_weight = round(weight, 1)
+                    logging.debug(f"V2方式成功读取料斗{hopper_index}重量: 原始值={raw_weight}, 转换后={rounded_weight}克")
+                    
+                    # 更新缓存值
+                    self.current_weights[internal_index] = rounded_weight
+                    return rounded_weight
+                else:
+                    logging.warning(f"V2方式读取料斗{hopper_index}重量返回无效数据")
+            except Exception as e:
+                logging.warning(f"V2方式读取料斗{hopper_index}重量出错: {e}")
+                
+            # 如果新方式失败，尝试使用原方式作为备选
+            try:
+                logging.debug(f"尝试原方式读取料斗{hopper_index}重量，地址={addr}")
+                result = self.client.read_registers(addr, 2, slave_id)
+                
+                if result and (isinstance(result, list) or hasattr(result, 'registers')):
+                    raw_weight = result[0] if isinstance(result, list) else result.registers[0]
+                    weight = raw_weight / 10.0
+                    rounded_weight = round(weight, 1)
+                    logging.debug(f"原方式成功读取料斗{hopper_index}重量: 原始值={raw_weight}, 转换后={rounded_weight}克")
+                    
+                    # 更新缓存值
+                    self.current_weights[internal_index] = rounded_weight
+                    return rounded_weight
+                else:
+                    logging.warning(f"原方式读取料斗{hopper_index}重量也返回无效数据")
+            except Exception as e:
+                logging.warning(f"原方式读取料斗{hopper_index}重量也出错: {e}")
+            
+            # 如果两种方式都失败，返回缓存的值
+            logging.debug(f"两种方式都失败，返回缓存的料斗{hopper_index}重量: {self.current_weights[internal_index]}克")
             return self.current_weights[internal_index]
             
         except Exception as e:
-            logging.error(f"读取料斗{hopper_index}重量时出错: {e}", exc_info=True)
-            return 0.0
+            logging.error(f"读取料斗{hopper_index}重量总体出错: {e}", exc_info=True)
+            return self.current_weights[internal_index]  # 返回缓存值而非0
 
 # print("DEBUG: CommunicationManager class defined.") <-- REMOVE

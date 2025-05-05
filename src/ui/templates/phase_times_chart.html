@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>阶段时间分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            margin-bottom: 30px;
+            height: 400px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .summary-card {
+            background-color: #f1f8ff;
+            border-radius: 8px;
+            padding: 15px;
+            width: 30%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .summary-card h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .data-table th, .data-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>阶段时间分析</h1>
+        <p>此报告展示了各物料在配料过程中不同阶段的时间分布，帮助优化配料参数和提高效率。</p>
+        
+        <div class="chart-container">
+            <canvas id="phaseTimesChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="phaseTimesComparisonChart"></canvas>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <h3>快加阶段</h3>
+                <p>平均时间: <span id="fast-avg">-</span> 秒</p>
+                <p>最长时间: <span id="fast-max">-</span> 秒</p>
+                <p>最短时间: <span id="fast-min">-</span> 秒</p>
+                <p>标准差: <span id="fast-std">-</span> 秒</p>
+            </div>
+            <div class="summary-card">
+                <h3>慢加阶段</h3>
+                <p>平均时间: <span id="slow-avg">-</span> 秒</p>
+                <p>最长时间: <span id="slow-max">-</span> 秒</p>
+                <p>最短时间: <span id="slow-min">-</span> 秒</p>
+                <p>标准差: <span id="slow-std">-</span> 秒</p>
+            </div>
+            <div class="summary-card">
+                <h3>精加阶段</h3>
+                <p>平均时间: <span id="fine-avg">-</span> 秒</p>
+                <p>最长时间: <span id="fine-max">-</span> 秒</p>
+                <p>最短时间: <span id="fine-min">-</span> 秒</p>
+                <p>标准差: <span id="fine-std">-</span> 秒</p>
+            </div>
+        </div>
+        
+        <h2>原始数据</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>记录ID</th>
+                    <th>物料类型</th>
+                    <th>目标重量</th>
+                    <th>实际重量</th>
+                    <th>快加时间(秒)</th>
+                    <th>慢加时间(秒)</th>
+                    <th>精加时间(秒)</th>
+                    <th>总时间(秒)</th>
+                    <th>日期时间</th>
+                </tr>
+            </thead>
+            <tbody id="data-table-body">
+                <!-- 数据将通过JavaScript动态插入 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 数据将通过Python插入这里
+        const phaseTimesData = $PHASE_TIMES_DATA;
+        
+        // 解析数据
+        const packageIds = phaseTimesData.map(item => item.package_id);
+        const fastFeedingTimes = phaseTimesData.map(item => item.fast_feeding);
+        const slowFeedingTimes = phaseTimesData.map(item => item.slow_feeding);
+        const fineFeedingTimes = phaseTimesData.map(item => item.fine_feeding);
+        const totalTimes = phaseTimesData.map(item => item.total_time);
+        const materialTypes = phaseTimesData.map(item => item.material_type);
+        
+        // 计算统计数据
+        function calculateStats(data) {
+            if (data.length === 0) return { avg: 0, max: 0, min: 0, std: 0 };
+            
+            const avg = data.reduce((sum, val) => sum + val, 0) / data.length;
+            const max = Math.max(...data);
+            const min = Math.min(...data);
+            
+            // 计算标准差
+            const variance = data.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / data.length;
+            const std = Math.sqrt(variance);
+            
+            return { avg, max, min, std };
+        }
+        
+        // 更新统计卡片
+        const fastStats = calculateStats(fastFeedingTimes);
+        const slowStats = calculateStats(slowFeedingTimes);
+        const fineStats = calculateStats(fineFeedingTimes);
+        
+        document.getElementById('fast-avg').textContent = fastStats.avg.toFixed(2);
+        document.getElementById('fast-max').textContent = fastStats.max.toFixed(2);
+        document.getElementById('fast-min').textContent = fastStats.min.toFixed(2);
+        document.getElementById('fast-std').textContent = fastStats.std.toFixed(2);
+        
+        document.getElementById('slow-avg').textContent = slowStats.avg.toFixed(2);
+        document.getElementById('slow-max').textContent = slowStats.max.toFixed(2);
+        document.getElementById('slow-min').textContent = slowStats.min.toFixed(2);
+        document.getElementById('slow-std').textContent = slowStats.std.toFixed(2);
+        
+        document.getElementById('fine-avg').textContent = fineStats.avg.toFixed(2);
+        document.getElementById('fine-max').textContent = fineStats.max.toFixed(2);
+        document.getElementById('fine-min').textContent = fineStats.min.toFixed(2);
+        document.getElementById('fine-std').textContent = fineStats.std.toFixed(2);
+        
+        // 填充数据表
+        const tableBody = document.getElementById('data-table-body');
+        phaseTimesData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.package_id}</td>
+                <td>${item.material_type || '未知'}</td>
+                <td>${item.target_weight.toFixed(2)}</td>
+                <td>${item.actual_weight.toFixed(2)}</td>
+                <td>${item.fast_feeding.toFixed(2)}</td>
+                <td>${item.slow_feeding.toFixed(2)}</td>
+                <td>${item.fine_feeding.toFixed(2)}</td>
+                <td>${item.total_time.toFixed(2)}</td>
+                <td>${item.timestamp}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+        
+        // 创建阶段时间图表
+        const ctx = document.getElementById('phaseTimesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: packageIds,
+                datasets: [
+                    {
+                        label: '快加时间',
+                        data: fastFeedingTimes,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    },
+                    {
+                        label: '慢加时间',
+                        data: slowFeedingTimes,
+                        backgroundColor: 'rgba(255, 206, 86, 0.7)',
+                    },
+                    {
+                        label: '精加时间',
+                        data: fineFeedingTimes,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '各包装阶段时间分布'
+                    },
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: '包装ID'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: '时间(秒)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 创建按物料类型的阶段时间对比图表
+        // 首先按物料类型分组数据
+        const materialGroups = {};
+        phaseTimesData.forEach(item => {
+            const materialType = item.material_type || '未知';
+            if (!materialGroups[materialType]) {
+                materialGroups[materialType] = {
+                    fast: [],
+                    slow: [],
+                    fine: [],
+                    total: []
+                };
+            }
+            materialGroups[materialType].fast.push(item.fast_feeding);
+            materialGroups[materialType].slow.push(item.slow_feeding);
+            materialGroups[materialType].fine.push(item.fine_feeding);
+            materialGroups[materialType].total.push(item.total_time);
+        });
+        
+        // 计算每种物料的平均时间
+        const materialLabels = [];
+        const avgFastTimes = [];
+        const avgSlowTimes = [];
+        const avgFineTimes = [];
+        
+        for (const material in materialGroups) {
+            materialLabels.push(material);
+            
+            const fastAvg = materialGroups[material].fast.reduce((sum, val) => sum + val, 0) / materialGroups[material].fast.length;
+            const slowAvg = materialGroups[material].slow.reduce((sum, val) => sum + val, 0) / materialGroups[material].slow.length;
+            const fineAvg = materialGroups[material].fine.reduce((sum, val) => sum + val, 0) / materialGroups[material].fine.length;
+            
+            avgFastTimes.push(fastAvg);
+            avgSlowTimes.push(slowAvg);
+            avgFineTimes.push(fineAvg);
+        }
+        
+        // 创建物料对比图表
+        const ctxComparison = document.getElementById('phaseTimesComparisonChart').getContext('2d');
+        new Chart(ctxComparison, {
+            type: 'bar',
+            data: {
+                labels: materialLabels,
+                datasets: [
+                    {
+                        label: '平均快加时间',
+                        data: avgFastTimes,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    },
+                    {
+                        label: '平均慢加时间',
+                        data: avgSlowTimes,
+                        backgroundColor: 'rgba(255, 206, 86, 0.7)',
+                    },
+                    {
+                        label: '平均精加时间',
+                        data: avgFineTimes,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '不同物料的阶段时间对比'
+                    },
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: '物料类型'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: '平均时间(秒)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -29,8 +29,17 @@ from src.core.event_system import EventDispatcher
 from src.communication.comm_manager import CommunicationManager
 from src.utils.data_manager import DataManager
 from src.control.cycle_monitor import CycleMonitor
-# Assuming setup_logging is accessible or we replicate it
-# from .main import setup_logging # Or define setup_logging here/in utils
+
+# --- 批处理相关导入 ---
+from src.controllers.batch_processing_manager import get_batch_manager
+from src.config.batch_config_manager import get_batch_config_manager
+# --- End Batch Import---
+
+# --- 用户认证相关导入 ---
+from src.auth.auth_service import get_auth_service
+from src.auth.user_manager import get_user_manager
+from src.ui.auth.login_dialog import LoginDialog
+# --- End Auth Import ---
 
 # --- UI Tabs --- (MOVED TO TOP)
 from src.ui.monitor_tab import MonitorTab
@@ -38,6 +47,9 @@ from src.ui.parameters_tab import ParametersTab
 from src.ui.connection_tab import ConnectionTab
 from src.ui.log_tab import LogTab
 from src.ui.smart_production_tab import SmartProductionTab  # 导入智能生产标签页
+from src.ui.batch.batch_tab import BatchTab  # 导入批处理标签页
+from src.ui.auth.user_management_tab import UserManagementTab  # 导入用户管理标签页
+from src.ui.debug_tab import DebugTab  # 导入调试标签页
 from src.ui.base_tab import BaseTab # Import BaseTab to potentially create a placeholder LogTab
 from src.ui.status_bar import StatusBar, StatusType # 导入状态栏组件
 
@@ -74,6 +86,20 @@ class App(tk.Tk):
             )
             # Inject dependency
             self.cycle_monitor.comm_manager = self.comm_manager
+            
+            # --- 初始化批处理管理器 ---
+            self.batch_manager = get_batch_manager()
+            self.batch_config_manager = get_batch_config_manager()
+            self.logger.info("批处理管理器已初始化")
+            # --- End Batch Init ---
+            
+            # --- 初始化用户认证服务 ---
+            self.auth_service = get_auth_service()
+            self.user_manager = get_user_manager()
+            self.current_user = None
+            self.logger.info("用户认证服务已初始化")
+            # --- End Auth Init ---
+            
             self.logger.info("Core components initialized.")
         except Exception as e:
             self.logger.error(f"Fatal error initializing core components: {e}", exc_info=True)
@@ -89,6 +115,9 @@ class App(tk.Tk):
         signal.signal(signal.SIGINT, self._signal_handler)
         signal.signal(signal.SIGTERM, self._signal_handler)
 
+        # --- Show login dialog if enabled ---
+        self._check_authentication()
+        
         # --- Attempt Auto-Connect ---
         self._attempt_connection()
 
@@ -133,6 +162,12 @@ class App(tk.Tk):
              self.log_tab = LogTab(self.notebook, self.comm_manager, self.settings, self.log_queue) # Using placeholder
              # 创建智能生产标签页
              self.smart_production_tab = SmartProductionTab(self.notebook, self)
+             # 创建批处理标签页
+             self.batch_tab = BatchTab(self.notebook, self.comm_manager, self.settings, self.log_queue)
+             # 创建用户管理标签页
+             self.user_management_tab = UserManagementTab(self.notebook, self.comm_manager, self.settings, self.log_queue)
+             # 创建调试标签页
+             self.debug_tab = DebugTab(self.notebook, self)
 
              # Add tabs to notebook
              self.notebook.add(self.monitor_tab, text="监控")
@@ -140,9 +175,24 @@ class App(tk.Tk):
              self.notebook.add(self.connection_tab, text="连接设置")
              self.notebook.add(self.log_tab, text="日志")
              self.notebook.add(self.smart_production_tab, text="智能生产")  # 添加智能生产标签页
+             self.notebook.add(self.batch_tab, text="批处理")  # 添加批处理标签页
+             self.notebook.add(self.user_management_tab, text="用户管理")  # 添加用户管理标签页
+             self.notebook.add(self.debug_tab, text="调试")  # 添加调试标签页
 
              self.notebook.pack(expand=True, fill="both", padx=10, pady=10)
              self.logger.info("UI tabs created and added.")
+             
+             # 创建tabs字典，用于访问
+             self.tabs = {
+                 "monitor": self.monitor_tab,
+                 "params": self.params_tab,
+                 "connection": self.connection_tab,
+                 "log": self.log_tab,
+                 "smart_production": self.smart_production_tab,
+                 "batch": self.batch_tab,
+                 "user_management": self.user_management_tab,
+                 "debug": self.debug_tab
+             }
              
              # 设置每个标签页的状态栏引用
              self._set_status_bar_for_tabs()
@@ -167,7 +217,10 @@ class App(tk.Tk):
                                ("参数", self.params_tab), 
                                ("连接", self.connection_tab), 
                                ("日志", self.log_tab),
-                               ("智能生产", self.smart_production_tab)]:  # 添加智能生产标签页
+                               ("智能生产", self.smart_production_tab),
+                               ("批处理", self.batch_tab),
+                               ("用户管理", self.user_management_tab),
+                               ("调试", self.debug_tab)]:  # 添加调试标签页到状态栏设置
                 if isinstance(tab, BaseTab):
                     tab.set_status_bar(self.status_bar)
                     self.logger.info(f"已为{tab_name}标签页设置状态栏引用")
@@ -263,7 +316,23 @@ class App(tk.Tk):
     def _refresh_all_tabs(self):
         """Refresh all tabs."""
         try:
-            for tab_id, tab_class in enumerate([self.monitor_tab, self.params_tab, self.connection_tab, self.log_tab]):
+            # 创建要刷新的标签页列表
+            tabs_to_refresh = [self.monitor_tab, self.params_tab, self.connection_tab, self.log_tab, self.smart_production_tab]
+            
+            # 安全地添加批处理标签页（如果存在）
+            if hasattr(self, 'batch_tab') and self.batch_tab:
+                tabs_to_refresh.append(self.batch_tab)
+                
+            # 安全地添加用户管理标签页（如果存在）
+            if hasattr(self, 'user_management_tab') and self.user_management_tab:
+                tabs_to_refresh.append(self.user_management_tab)
+                
+            # 安全地添加调试标签页（如果存在）
+            if hasattr(self, 'debug_tab') and self.debug_tab:
+                tabs_to_refresh.append(self.debug_tab)
+            
+            # 刷新所有标签页
+            for tab_id, tab_class in enumerate(tabs_to_refresh):
                 # Carefully refresh each tab
                 if tab_class and isinstance(tab_class, BaseTab):
                     try:
@@ -293,13 +362,40 @@ class App(tk.Tk):
         
         # Clean up resources
         try:
-            for tab in [self.monitor_tab, self.params_tab, self.connection_tab, self.log_tab]:
+            # 创建要清理的标签页列表
+            tabs_to_cleanup = [self.monitor_tab, self.params_tab, self.connection_tab, self.log_tab, self.smart_production_tab]
+            
+            # 安全地添加批处理标签页（如果存在）
+            if hasattr(self, 'batch_tab') and self.batch_tab:
+                tabs_to_cleanup.append(self.batch_tab)
+                
+            # 安全地添加用户管理标签页（如果存在）
+            if hasattr(self, 'user_management_tab') and self.user_management_tab:
+                tabs_to_cleanup.append(self.user_management_tab)
+            
+            # 清理所有标签页
+            for tab in tabs_to_cleanup:
                 if tab and isinstance(tab, BaseTab):
-                    tab.cleanup()
+                    try:
+                        tab.cleanup()
+                    except Exception as e:
+                        self.logger.error(f"Error cleaning up tab {type(tab).__name__}: {e}")
+            
+            # 关闭批处理管理器
+            if hasattr(self, 'batch_manager'):
+                self.batch_manager.shutdown()
+                self.logger.info("批处理管理器已关闭")
+                
+            # 用户注销
+            if hasattr(self, 'auth_service') and self.current_user:
+                self.auth_service.logout()
+                self.logger.info(f"用户 {self.current_user.username} 已注销")
+                
             # Disconnect if connected
             if hasattr(self, 'comm_manager') and self.comm_manager.is_connected:
                 self.comm_manager.disconnect()
                 self.logger.info("Communication disconnected.")
+                
             self.logger.info("Clean shutdown completed.")
         except Exception as e:
             self.logger.error(f"Error during shutdown: {e}", exc_info=True)
@@ -310,6 +406,52 @@ class App(tk.Tk):
     def get_status_bar(self):
         """获取状态栏实例"""
         return self.status_bar
+
+    def _check_authentication(self):
+        """检查用户认证状态，如果需要则显示登录对话框"""
+        # 检查是否启用了认证功能
+        auth_enabled = self.settings.get("auth.enabled", False)
+        if not auth_enabled:
+            self.logger.info("用户认证功能未启用")
+            return
+            
+        # 显示登录对话框
+        self.logger.info("显示登录对话框")
+        def on_login_result(success):
+            if success:
+                self.current_user = self.auth_service.current_user
+                self.logger.info(f"用户 {self.current_user.username} 登录成功")
+                self.status_bar.show_success(f"欢迎，{self.current_user.display_name or self.current_user.username}")
+                # 更新UI以反映用户权限
+                self._update_ui_for_permissions()
+            else:
+                self.logger.warning("用户取消登录或登录失败")
+                # 考虑是否允许未登录用户继续使用应用程序
+                if self.settings.get("auth.require_login", True):
+                    self.logger.info("系统要求登录，关闭应用程序")
+                    self.status_bar.show_error("登录失败，应用程序将关闭")
+                    self.after(2000, self.destroy)  # 延迟关闭以便用户看到消息
+                else:
+                    self.logger.info("允许未登录用户使用应用程序")
+                    self.status_bar.show_warning("以访客模式运行，功能受限")
+        
+        # 创建并显示登录对话框
+        login_dialog = LoginDialog(self, callback=on_login_result)
+        
+    def _update_ui_for_permissions(self):
+        """根据当前用户权限更新UI状态"""
+        if not self.current_user:
+            return
+            
+        # 记录权限更新
+        self.logger.info(f"根据用户 {self.current_user.username} 的权限更新UI")
+        
+        # 可以在这里根据用户权限启用/禁用或显示/隐藏特定的UI元素
+        # 例如：禁用某些标签页、按钮等
+        
+        # 更新状态栏显示当前用户
+        user_role = self.current_user.role.name
+        self.status_bar.show_info(f"当前用户: {self.current_user.display_name or self.current_user.username} ({user_role})")
 
 
 if __name__ == "__main__":
@@ -350,4 +492,4 @@ def test_read_params():
         
         logging.info("参数读取测试完成")
     else:
-        logging.error("无法测试：通信管理器未连接或未初始化") 
+        logging.error("无法测试：通信管理器未连接或未初始化")   

@@ -150,6 +150,34 @@ except ImportError as e:
     logger.error(f"导入组件失败: {e}")
     raise ImportError(f"无法导入必要的组件，请确保项目结构正确并且已添加到Python路径")
 
+# 应用补丁，添加missing方法
+logger.info("正在应用数据仓库补丁...")
+try:
+    # 使用动态方法添加
+    def get_current_parameters(self, hopper_id=None, material_type=None):
+        """获取当前控制参数"""
+        logger.info(f"获取当前参数，hopper_id={hopper_id}, material_type={material_type}")
+        # 返回默认参数
+        return {
+            "coarse_speed": 35.0,
+            "fine_speed": 18.0,
+            "coarse_advance": 40.0,
+            "fine_advance": 5.0,
+            "jog_count": 3,
+            "drop_compensation": 1.0
+        }
+    
+    # 检查方法是否已存在，不存在则添加
+    if not hasattr(LearningDataRepository, 'get_current_parameters'):
+        import types
+        LearningDataRepository.get_current_parameters = types.MethodType(get_current_parameters, LearningDataRepository)
+        logger.info("已动态添加get_current_parameters方法")
+    else:
+        logger.info("get_current_parameters方法已存在")
+        
+except Exception as e:
+    logger.error(f"应用补丁失败: {e}")
+
 
 class SensitivitySystemDemo:
     """敏感度分析系统演示类"""
@@ -200,11 +228,12 @@ class SensitivitySystemDemo:
         
         # 设置控制器参数
         self.controller.params = {
-            "feeding_speed_coarse": 35.0,
-            "feeding_speed_fine": 18.0,
-            "advance_amount_coarse": 40.0,
-            "advance_amount_fine": 5.0,
-            "drop_compensation": 1.0,
+            "coarse_speed": 35.0,           # 快加速度
+            "fine_speed": 18.0,             # 慢加速度
+            "coarse_advance": 40.0,         # 快加提前量
+            "fine_advance": 5.0,            # 慢加提前量
+            "jog_count": 3,                 # 点动次数
+            "drop_compensation": 1.0,       # 落差补偿
         }
         
         # 创建敏感度分析引擎
@@ -256,69 +285,117 @@ class SensitivitySystemDemo:
         """
         生成演示数据
         
+        为演示目的生成样本数据，并存储到数据库中
+        
         Args:
-            data_size: 要生成的数据量
+            data_size: 生成记录的数量
         """
         logger.info(f"生成{data_size}条演示数据...")
         
-        # 定义两种参数配置，一种性能较差，一种性能较好
-        config_poor = {
-            "feeding_speed_coarse": 35.0,
-            "feeding_speed_fine": 18.0,
-            "advance_amount_coarse": 40.0,
-            "advance_amount_fine": 5.0,
-            "drop_compensation": 1.0
-        }
+        # 设置随机参数
+        material_types = ["糖粉", "塑料颗粒", "淀粉"]
+        data_counts = {material: 0 for material in material_types}
         
-        config_good = {
-            "feeding_speed_coarse": 38.0,
-            "feeding_speed_fine": 17.0,
-            "advance_amount_coarse": 38.0,
-            "advance_amount_fine": 6.0,
-            "drop_compensation": 1.2
-        }
-        
-        # 生成3种不同材料的数据
-        materials = ["糖粉", "塑料颗粒", "淀粉"]
-        
+        # 分阶段生成不同特性的数据
         for i in range(data_size):
-            # 随机选择材料
-            material = materials[i % len(materials)]
+            # 选择物料类型
+            material_type = material_types[i % len(material_types)]
+            data_counts[material_type] += 1
             
-            # 前半部分使用较差配置，后半部分使用较好配置
-            if i < data_size // 2:
-                params = dict(config_poor)
-                # 对较差配置增加偏差
-                weight_dev = random.uniform(0.15, 0.3)
-                time_dev = random.uniform(3.2, 3.8)
-            else:
-                params = dict(config_good)
-                # 对较好配置增加较小的偏差
-                weight_dev = random.uniform(0.05, 0.15)
-                time_dev = random.uniform(2.8, 3.2)
+            # 设置不同时期的参数版本
+            parameter_version = i // (data_size // 3)  # 0, 1, 2 三个参数版本
             
+            # 为不同物料和参数版本设置基础参数
+            target_weight = 100.0  # 固定目标重量
+            
+            # 根据物料类型和参数版本设置基础参数
+            if material_type == "糖粉":
+                coarse_speed_base = 35.0 + parameter_version * 2.0
+                fine_speed_base = 18.0 - parameter_version * 0.5
+                coarse_advance_base = 40.0 + parameter_version * 1.0
+                fine_advance_base = 5.0 + parameter_version * 0.2
+                jog_count_base = 3
+                drop_compensation_base = 1.0 + parameter_version * 0.1
+            elif material_type == "塑料颗粒":
+                coarse_speed_base = 40.0 + parameter_version * 2.0
+                fine_speed_base = 20.0 - parameter_version * 0.5
+                coarse_advance_base = 45.0 + parameter_version * 1.0
+                fine_advance_base = 6.0 + parameter_version * 0.2
+                jog_count_base = 2
+                drop_compensation_base = 1.2 + parameter_version * 0.1
+            else:  # 淀粉
+                coarse_speed_base = 30.0 + parameter_version * 2.0
+                fine_speed_base = 15.0 - parameter_version * 0.5
+                coarse_advance_base = 35.0 + parameter_version * 1.0
+                fine_advance_base = 4.0 + parameter_version * 0.2
+                jog_count_base = 4
+                drop_compensation_base = 0.8 + parameter_version * 0.1
+                
             # 添加随机波动
-            for key in params:
-                params[key] += random.uniform(-params[key]*0.05, params[key]*0.05)
+            coarse_speed = coarse_speed_base + random.uniform(-1.0, 1.0)
+            fine_speed = fine_speed_base + random.uniform(-0.5, 0.5)
+            coarse_advance = coarse_advance_base + random.uniform(-0.5, 0.5)
+            fine_advance = fine_advance_base + random.uniform(-0.1, 0.1)
+            jog_count = jog_count_base
+            drop_compensation = drop_compensation_base + random.uniform(-0.05, 0.05)
             
-            # 保存记录
-            record_id = self.data_repo.save_packaging_record(
-                target_weight=100.0,
-                actual_weight=100.0 + weight_dev,
-                packaging_time=time_dev,
-                parameters=params,
-                material_type=material,
-                notes=f"演示数据-{material}-{i}"
+            # 计算包装结果偏差 - 在基础参数上添加结构化影响和随机波动
+            if parameter_version == 0:
+                # 第一阶段：基础影响和随机波动
+                deviation = (
+                    coarse_speed * 0.002 +   # 快加速度影响
+                    fine_speed * 0.003 -     # 慢加速度影响
+                    coarse_advance * 0.001 - # 快加提前量影响
+                    fine_advance * 0.01 +    # 慢加提前量影响
+                    random.uniform(-0.1, 0.3)  # 随机波动
+                )
+            elif parameter_version == 1:
+                # 第二阶段：不同的参数影响关系
+                deviation = (
+                    coarse_speed * 0.001 +   
+                    fine_speed * 0.005 -     
+                    coarse_advance * 0.002 - 
+                    fine_advance * 0.005 +   
+                    random.uniform(-0.15, 0.25)
+                )
+            else:
+                # 第三阶段：再次变化的参数关系
+                deviation = (
+                    coarse_speed * 0.003 +   
+                    fine_speed * 0.002 -     
+                    coarse_advance * 0.0015 - 
+                    fine_advance * 0.015 +   
+                    random.uniform(-0.05, 0.15)
+                )
+                
+            # 最终重量 = 目标重量 + 偏差
+            actual_weight = target_weight + deviation
+            
+            # 生成包装时间
+            packaging_time = 4.0 + (coarse_speed * 0.05) + random.uniform(-0.5, 0.5)
+            
+            # 存储到数据库
+            parameters = {
+                "coarse_speed": coarse_speed,
+                "fine_speed": fine_speed,
+                "coarse_advance": coarse_advance,
+                "fine_advance": fine_advance,
+                "jog_count": jog_count,
+                "drop_compensation": drop_compensation,
+                "filling_time": packaging_time  # 添加填充时间
+            }
+            
+            self.data_repo.save_packaging_record(
+                target_weight=target_weight,
+                actual_weight=actual_weight,
+                packaging_time=packaging_time,
+                parameters=parameters,
+                material_type=material_type
             )
         
+        self.demo_data_counts = data_counts
         logger.info(f"已生成{data_size}条演示数据")
-        
-        # 记录步骤
-        self.demo_steps.append({
-            "step": "数据生成",
-            "description": f"生成了{data_size}条测试数据，包含3种材料",
-            "data_counts": {material: data_size // 3 for material in materials}
-        })
+        logger.debug(f"数据分布: {data_counts}")
     
     def run_sensitivity_analysis(self, material_type="糖粉"):
         """

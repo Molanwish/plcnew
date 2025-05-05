@@ -964,3 +964,117 @@ class LearningDataRepository:
         except sqlite3.Error as e:
             logger.error(f"获取回退事件统计失败: {e}")
             raise 
+
+    def get_recommendations_by_status(self, status=None, limit=10, material_type=None, start_time=None, end_time=None):
+        """
+        根据状态获取参数推荐记录
+        
+        参数:
+            status (str, optional): 推荐状态，可以是'pending'、'approved'、'rejected'或None（表示所有状态）
+            limit (int): 返回的最大记录数
+            material_type (str, optional): 物料类型过滤
+            start_time (str, optional): 开始时间过滤
+            end_time (str, optional): 结束时间过滤
+            
+        返回:
+            List[Dict]: 包含符合条件的推荐记录的列表
+        """
+        try:
+            conn = self._get_connection()
+            cursor = conn.cursor()
+            
+            query = """
+            SELECT id, timestamp, material_type, recommended_parameters, expected_improvement, 
+                   status, analysis_id, approved_timestamp, applied_timestamp, notes
+            FROM ParameterRecommendations
+            WHERE 1=1
+            """
+            params = []
+            
+            if status:
+                query += " AND status = ?"
+                params.append(status)
+                
+            if material_type:
+                query += " AND material_type = ?"
+                params.append(material_type)
+                
+            if start_time:
+                query += " AND timestamp >= ?"
+                params.append(start_time)
+                
+            if end_time:
+                query += " AND timestamp <= ?"
+                params.append(end_time)
+                
+            query += " ORDER BY timestamp DESC LIMIT ?"
+            params.append(limit)
+            
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            
+            result = []
+            for row in rows:
+                result.append({
+                    'id': row[0],
+                    'timestamp': row[1],
+                    'material_type': row[2],
+                    'recommended_parameters': json.loads(row[3]) if row[3] else {},
+                    'expected_improvement': row[4],
+                    'status': row[5],
+                    'analysis_id': row[6],
+                    'approved_timestamp': row[7],
+                    'applied_timestamp': row[8],
+                    'notes': row[9]
+                })
+            
+            return result
+        except sqlite3.Error as e:
+            self.logger.error(f"获取参数推荐记录失败: {str(e)}")
+            return []
+        finally:
+            self._close_connection(conn)
+            
+    def save_parameter_recommendation(self, material_type, recommended_parameters, expected_improvement=None, 
+                                   analysis_id=None, notes=None):
+        """
+        保存参数推荐记录
+        
+        参数:
+            material_type (str): 物料类型
+            recommended_parameters (Dict[str, float]): 推荐的参数字典
+            expected_improvement (float, optional): 预期改进幅度
+            analysis_id (int, optional): 关联的分析ID
+            notes (str, optional): 备注信息
+            
+        返回:
+            int: 新记录的ID
+        """
+        try:
+            timestamp = datetime.datetime.now().isoformat()
+            recommended_parameters_json = json.dumps(recommended_parameters)
+            
+            conn = self._get_connection()
+            try:
+                cursor = conn.cursor()
+                
+                # 插入推荐记录
+                cursor.execute(
+                    """
+                    INSERT INTO ParameterRecommendations
+                    (timestamp, material_type, recommended_parameters, expected_improvement, status, analysis_id, notes)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (timestamp, material_type, recommended_parameters_json, expected_improvement, 'pending', analysis_id, notes)
+                )
+                
+                recommendation_id = cursor.lastrowid
+                conn.commit()
+                logger.info(f"保存参数推荐记录成功，ID: {recommendation_id}, 物料类型: {material_type}")
+                return recommendation_id
+            finally:
+                self._close_connection(conn)
+                
+        except sqlite3.Error as e:
+            logger.error(f"保存参数推荐记录失败: {str(e)}")
+            return None

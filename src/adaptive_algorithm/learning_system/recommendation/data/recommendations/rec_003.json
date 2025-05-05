@@ -1,0 +1,33 @@
+{
+  "id": "rec_003",
+  "recommendation_id": "rec_003",
+  "timestamp": "2025-04-29T17:06:35.058367",
+  "material_type": "granule",
+  "status": "applied",
+  "applied_timestamp": "2025-04-30T11:06:35.058367",
+  "expected_improvement": 10.0,
+  "recommendation": {
+    "coarse_speed": 90.0,
+    "fine_speed": 15.0,
+    "coarse_advance": 2.2,
+    "fine_advance": 0.3
+  },
+  "performance_data": {
+    "before_metrics": {
+      "weight_accuracy": 94.0,
+      "filling_time": 3.5,
+      "cycle_time": 5.8
+    },
+    "after_metrics": {
+      "weight_accuracy": 99.0,
+      "filling_time": 2.2,
+      "cycle_time": 4.5
+    },
+    "improvement": {
+      "weight_accuracy": 5.0,
+      "filling_time": 37.1,
+      "cycle_time": 22.4
+    },
+    "overall_score": 9.5
+  }
+}
